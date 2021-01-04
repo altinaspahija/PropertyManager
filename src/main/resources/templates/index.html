@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="ISO-8859-1">
+<title>Product Manager</title>
+</head>
+<body>
+<div align="center">
+	<div sec:authorize="isAuthenticated()">
+		Welcome <b><span sec:authentication="name">Username</span></b>
+		&nbsp;
+		<i><span sec:authentication="principal.authorities">Roles</span></i>
+	</div>
+		
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Logout" />
+	</form>
+	
+	<h1>Property Manager</h1>
+	<div sec:authorize="hasAnyAuthority('Host')">
+		<a href="new">Create New Property</a>
+	</div>
+	
+	<br/><br/>
+	<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th>Property ID</th>
+				<th>Property Country</th>
+				<th>Property Address</th>
+				<th>Property Price</th>
+				<th>Property Description</th>
+				<th>Property Type</th>
+				<th>Property Start Available Date</th>
+				<th>Property End Available Date</th>
+				<th sec:authorize="hasAnyAuthority('Host,Guest')">Actions</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="property : ${listProperties}">
+				<td th:text="${property.id}">Property ID</td>
+				<td th:text="${property.country}">Country</td>
+				<td th:text="${property.address}">Address</td>
+				<td th:text="${property.price}">Price</td>
+				<td th:text="${property.description}">Description</td>
+				<td th:text="${property.propertytype}">Property Type</td>
+				<td th:text="${property.available_from_date}">Start available date</td>
+				<td th:text="${property.available_to_date}">End available date</td>
+				<td sec:authorize="hasAuthority('Host')">
+					<a th:href="@{'/edit/' + ${property.id}}">Edit</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a sec:authorize="hasAuthority('Host')" th:href="@{'/delete/' + ${property.id}}">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>
