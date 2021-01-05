@@ -18,6 +18,8 @@ import net.codejava.User;
 import net.codejava.PropertyService;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Controller
 public class PropertyController {
@@ -31,25 +33,14 @@ public class PropertyController {
 
     private UserDetails userDetails;
     private UserDetailsService userDetailsService;
+    private HttpServletRequest request;
 
 
     @RequestMapping("/")
     public String viewHomePage(Model model) {
-/*
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        User user = (User)auth.getPrincipal();
-        int userId = user.getUser_id();
-
-        /*
-        String username = userDetails.getUsername();
-        User user_repo = userRepository.getUserByUsername(username);
-        Integer user_id = user_repo.getUser_id();
-
-         */
-
-        MyUserDetails myUserDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username=myUserDetails.getUsername(); //Fetch the custom property in User class
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
         User user_repo = userRepository.getUserByUsername(username);
         Integer user_id = user_repo.getUser_id();
         List<Property> listProperties = service.listAllByUserId(user_id);
