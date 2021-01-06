@@ -40,18 +40,18 @@
 		</thead>
 		<tbody>
 			<tr th:each="property : ${listProperties}">
-				<td th:text="${property.id}">Property ID</td>
+				<td th:text="${property.propertyId}">Property ID</td>
 				<td th:text="${property.country}">Country</td>
 				<td th:text="${property.address}">Address</td>
 				<td th:text="${property.price}">Price</td>
 				<td th:text="${property.description}">Description</td>
-				<td th:text="${property.propertytype}">Property Type</td>
-				<td th:text="${property.available_from_date}">Start available date</td>
-				<td th:text="${property.available_to_date}">End available date</td>
+				<td th:text="${property.propertyType}">Property Type</td>
+				<td th:text="${property.availableFrom}">Start available date</td>
+				<td th:text="${property.availableTo}">End available date</td>
 				<td sec:authorize="hasAuthority('Host')">
-					<a th:href="@{'/edit/' + ${property.id}}">Edit</a>
+					<a th:href="@{'/edit/' + ${property.propertyId}}">Edit</a>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a sec:authorize="hasAuthority('Host')" th:href="@{'/delete/' + ${property.id}}">Delete</a>
+					<a sec:authorize="hasAuthority('Host')" th:href="@{'/delete/' + ${property.propertyId}}">Delete</a>
 				</td>
 			</tr>
 		</tbody>

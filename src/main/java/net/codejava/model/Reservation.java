@@ -1,0 +1,40 @@
+package net.codejava.model;
+
+import lombok.Data;
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@Entity
+@Table(name = "reservation")
+public class Reservation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="reservation_id")
+    private int reservationId;
+
+    @Column(name="checkin")
+    private Date checkIn;
+
+    @Column(name="checkout")
+    private Date checkOut;
+
+    @Column(name="price")
+    private float price;
+
+    @Column(name="property_id")
+    private int propertyId;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User client;
+
+    /*@ManyToOne
+    @JoinColumn(name="property_id")
+    private Property property;*/
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id")
+    private PaymentDetails paymentDetails;
+
+}

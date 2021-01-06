@@ -1,11 +1,10 @@
-package net.codejava;
+package net.codejava.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import org.hibernate.annotations.Type;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,9 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+@Data
 @Entity
 @Table(name = "users")
 public class User {
@@ -28,12 +27,20 @@ public class User {
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer user_id;
-	private String username;
-	private String fullname;
-	private String password;
-	private String phonenumber;
 
-	@Column(columnDefinition = "TINYINT")
+	@Column(name = "username")
+	private String username;
+
+	@Column(name = "fullname")
+	private String fullname;
+
+	@Column(name = "password")
+	private String password;
+
+	@Column(name = "phonenumber")
+	private String phoneNumber;
+
+	@Column(name = "enabled", columnDefinition = "TINYINT")
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	public boolean enabled = true;
 
@@ -44,9 +51,9 @@ public class User {
 			joinColumns = @JoinColumn(name = "user_id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id")
 			)
-	private Set<Role> roles = new HashSet<>(); 
+	private Set<Role> roles = new HashSet<>();
 
-	public Integer getUser_id() {
+	/*public Integer getUser_id() {
 		return user_id;
 	}
 
@@ -75,10 +82,10 @@ public class User {
 		this.fullname = fullname;
 	}
 
-	public String getPhonenumber() { return phonenumber; }
+	public String getPhoneNumber() { return phoneNumber; }
 
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public Boolean isEnabled() {
@@ -96,9 +103,7 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-
-
-
+*/
 
 }
 
