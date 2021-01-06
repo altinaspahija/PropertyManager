@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
-    @Query("SELECT p FROM Property p WHERE p.user_id = :user_id")
-    public List<Property> getPropertiesByUser_id (@Param("user_id") Integer user_id);
+    @Query("SELECT p FROM Property p WHERE p.userId = :user_id")
+    public List<Property> getPropertiesByUser_id (@Param("user_id") Integer userId);
 
 }

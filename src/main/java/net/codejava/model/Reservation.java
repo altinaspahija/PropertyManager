@@ -22,11 +22,21 @@ public class Reservation {
     @Column(name="price")
     private float price;
 
-    @Column(name="property_id")
-    private int propertyId;
+    //@Column(name="property_id")
+    //private int propertyId;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
+    @Column(name="property_id")
+    private Integer propertyId;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="property_id",insertable=false ,updatable = false)
+    private Property property;
+
+    @Column(name="user_id")
+    private Integer userId;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="user_id",insertable=false ,updatable = false)
     private User client;
 
     /*@ManyToOne

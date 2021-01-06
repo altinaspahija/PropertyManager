@@ -1,5 +1,6 @@
 package net.codejava.dto;
 
+import net.codejava.model.Property;
 import net.codejava.model.Reservation;
 import lombok.Data;
 import net.codejava.model.User;
@@ -12,7 +13,7 @@ public class ReservationDto {
     private Date checkIn;
     private Date checkOut;
     private float price;
-    private int propertyId;
+    private Property property;
     private User client;
 
     public static Reservation getReservation(ReservationDto reservationDto){
@@ -22,7 +23,7 @@ public class ReservationDto {
         reservation.setCheckIn(reservationDto.getCheckIn());
         reservation.setCheckOut(reservationDto.getCheckOut());
         reservation.setPrice(reservationDto.getPrice());
-        reservation.setPropertyId(reservationDto.getPropertyId());
+        reservation.setProperty(reservationDto.getProperty());
         reservation.setClient(reservationDto.getClient());
 
         return reservation;
@@ -35,7 +36,7 @@ public class ReservationDto {
         reservationDto.setCheckIn(reservation.getCheckIn());
         reservationDto.setCheckOut(reservation.getCheckOut());
         reservationDto.setPrice(reservation.getPrice());
-        reservationDto.setPropertyId(reservation.getPropertyId());
+        reservationDto.setProperty(reservation.getProperty());
         reservationDto.setClient(reservation.getClient());
 
         return reservationDto;

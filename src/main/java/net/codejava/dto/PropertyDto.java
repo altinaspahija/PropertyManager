@@ -16,7 +16,7 @@ public class PropertyDto {
     private String propertyType;
     private Date availableFrom;
     private Date availableTo;
-    private Integer user_id;
+    private Integer userId;
 
     public static Property getProperty(PropertyDto propertyDto) {
         if (propertyDto==null) return null;
@@ -29,7 +29,7 @@ public class PropertyDto {
         property.setPropertyType(propertyDto.getPropertyType());
         property.setAvailableFrom(propertyDto.getAvailableFrom());
         property.setAvailableTo(propertyDto.getAvailableTo());
-        property.setUser_id(propertyDto.getUser_id());
+        property.setUserId(propertyDto.getUserId());
 
         return property;
     }
@@ -45,7 +45,7 @@ public class PropertyDto {
         propertyDto.setPropertyType(property.getPropertyType());
         propertyDto.setAvailableFrom(property.getAvailableFrom());
         propertyDto.setAvailableTo(property.getAvailableTo());
-        propertyDto.setUser_id(property.getUser_id());
+        propertyDto.setUserId(property.getUserId());
 
         return propertyDto;
     }

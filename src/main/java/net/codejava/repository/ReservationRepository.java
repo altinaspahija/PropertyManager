@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends CrudRepository<Reservation, Integer>{
 
-    //@Query("SELECT r FROM Reservation r WHERE r.user_id = :user_id")
+    @Query("SELECT r FROM Reservation r WHERE r.userId = :user_id")
     //The following is used considering that we are getting a list of all the user's reservations (past or present).
-    //public List<Reservation> getReservationsByUserId(@Param("user_id") Integer user_id);
+    public List<Reservation> getReservationsByUserId(@Param("user_id") Integer userId);
 
-    //@Query("SELECT r FROM Reservation r WHERE r.property_id = :property_id")
-    //public Reservation getReservationByReservationId(@Param("property_id") Integer property_id);
+    @Query("SELECT r FROM Reservation r WHERE r.propertyId = :property_id")
+    public List<Reservation> getReservationByPropertyId(@Param("property_id") Integer propertyId);
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -37,12 +38,15 @@ public class Property {
     private Date availableTo;
 
     @Column(name="user_id")
-    private Integer user_id;
+    private Integer userId;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="user_id",insertable=false ,updatable = false)
     private User user;
 
+    @OneToMany
+    @JoinColumn(name="reservation_id")
+    private List<Reservation> reservation;
     /*public Integer getId() {
         return propertyId;
     }

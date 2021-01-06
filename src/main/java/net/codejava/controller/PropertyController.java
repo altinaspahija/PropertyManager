@@ -41,7 +41,7 @@ public class PropertyController {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
         User user_repo = userRepository.getUserByUsername(username);
-        Integer user_id = user_repo.getUser_id();
+        Integer user_id = user_repo.getUserId();
         List<Property> listProperties = service.listAllByUserId(user_id);
 
         model.addAttribute("listProperties", listProperties);

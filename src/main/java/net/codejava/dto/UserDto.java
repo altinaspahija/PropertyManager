@@ -5,7 +5,7 @@ import net.codejava.model.User;
 
 @Data
 public class UserDto {
-    private Integer user_id;
+    private Integer userId;
     private String username;
     private String fullname;
     private String password;
@@ -15,7 +15,7 @@ public class UserDto {
     public static User getUser(UserDto userDto){
         if (userDto==null) return null;
         User user = new User();
-        user.setUser_id(userDto.getUser_id());
+        user.setUserId(userDto.getUserId());
         user.setUsername(userDto.getUsername());
         user.setFullname(userDto.getFullname());
         user.setPassword(userDto.getPassword());
@@ -28,7 +28,7 @@ public class UserDto {
     public static UserDto getUserDto(User user){
         if (user==null) return null;
         UserDto userDto = new UserDto();
-        userDto.setUser_id(user.getUser_id());
+        userDto.setUserId(user.getUserId());
         userDto.setUsername(user.getUsername());
         userDto.setFullname(user.getFullname());
         userDto.setPassword(user.getPassword());
