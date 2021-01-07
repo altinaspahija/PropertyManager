@@ -16,8 +16,9 @@ public class PaymentDetails {
     @Column(name="payment_id")
     private int paymentId;
 
-    //I do not think we need reservationId here since we have established a relation below.
-    //private int reservationId;
+    @Column(name="reservation_id")
+    private int reservationId;
+
     @Column(name="payment_date")
     private Date paymentDate;
 
