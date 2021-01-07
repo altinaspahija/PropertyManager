@@ -1,34 +1,29 @@
 package net.codejava.service;
 
-import net.codejava.model.Property;
-import net.codejava.repository.PropertyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import net.codejava.dto.PropertyDto;
 
+import java.util.Date;
 import java.util.List;
 
-@Service
-public class PropertyService {
-    @Autowired
-    private PropertyRepository repo;
+public interface PropertyService {
+    List<PropertyDto> getPropertiesByUserId(Integer userId);
 
-    public List<Property> listAll() {
-        return repo.findAll();
-    }
+    PropertyDto getPropertyByPropertyId(Integer PropertyId);
 
-    public List<Property> listAllByUserId(Integer userId) {
-        return repo.getPropertiesByUser_id(userId);
-    }
+    List<PropertyDto> getPropertiesByFilters (float price,
+                                              String country,
+                                              Date availableFrom,
+                                              Date availableTo);
 
-    public void save(Property property) {
-        repo.save(property);
-    }
+    PropertyDto updatePropertyByPropertyId(PropertyDto propertyDto, Integer propertyId);
 
-    public Property get(Integer property_id) {
-        return repo.findById(property_id).get();
-    }
-
-    public void delete(Integer property_id) {
-        repo.deleteById(property_id);
-    }
+    boolean delete(Integer propertyId);
+    List<PropertyDto> getProperties();
+    PropertyDto addPropertyByUserId(Integer propertyId,
+                                          String country,
+                                          String address,
+                                          String description,
+                                          String propertyType,
+                                          Date availableFrom,
+                                          Date AvailableTo);
 }

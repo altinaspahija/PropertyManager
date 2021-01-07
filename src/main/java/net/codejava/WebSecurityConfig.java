@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
+	/*@Autowired
 	private DataSource dataSource;
 
 	@Bean
@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	/*
+	*//*
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -42,12 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		return authProvider;
 	}
-*/
+*//*
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		/*
+		*//*
 		auth.authenticationProvider(authenticationProvider());
-		 */
+		 *//*
 		auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
 
 		.dataSource(dataSource)
@@ -79,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.exceptionHandling().accessDeniedPage("/403");
 
-/*
+*//*
 			.and()
 			.formLogin()
 				.permitAll()
@@ -107,6 +107,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.exceptionHandling().accessDeniedPage("/403");
 
 
-*/
-	}
+
+	}*/
 }
