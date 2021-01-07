@@ -40,6 +40,9 @@ public class User {
 	@Column(name = "phonenumber")
 	private String phoneNumber;
 
+	@Column(name = "role_description")
+	private String roleDescription;
+
 	@Column(name = "enabled", columnDefinition = "TINYINT")
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	public boolean enabled = true;
