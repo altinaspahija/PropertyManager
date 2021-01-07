@@ -1,5 +1,6 @@
 package net.codejava.dto;
 
+import net.codejava.model.PaymentDetails;
 import net.codejava.model.Property;
 import net.codejava.model.Reservation;
 import lombok.Data;
@@ -9,12 +10,13 @@ import java.util.Date;
 
 @Data
 public class ReservationDto {
-    private int reservationId;
+    private Integer reservationId;
     private Date checkIn;
     private Date checkOut;
     private float price;
-    private Property property;
-    private User client;
+    private Integer propertyId;
+    private Integer userId;
+    private Integer paymentId;
 
     public static Reservation getReservation(ReservationDto reservationDto){
         if (reservationDto==null) return null;
@@ -23,8 +25,9 @@ public class ReservationDto {
         reservation.setCheckIn(reservationDto.getCheckIn());
         reservation.setCheckOut(reservationDto.getCheckOut());
         reservation.setPrice(reservationDto.getPrice());
-        reservation.setProperty(reservationDto.getProperty());
-        reservation.setClient(reservationDto.getClient());
+        reservation.setPropertyId(reservationDto.getPropertyId());
+        reservation.setUserId(reservationDto.getUserId());
+        reservation.setPaymentId(reservationDto.getPaymentId());
 
         return reservation;
     }
@@ -36,8 +39,9 @@ public class ReservationDto {
         reservationDto.setCheckIn(reservation.getCheckIn());
         reservationDto.setCheckOut(reservation.getCheckOut());
         reservationDto.setPrice(reservation.getPrice());
-        reservationDto.setProperty(reservation.getProperty());
-        reservationDto.setClient(reservation.getClient());
+        reservationDto.setPropertyId(reservation.getPropertyId());
+        reservationDto.setUserId(reservation.getUserId());
+        reservationDto.setPaymentId(reservation.getPaymentId());
 
         return reservationDto;
     }

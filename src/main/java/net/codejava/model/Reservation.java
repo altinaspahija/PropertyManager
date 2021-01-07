@@ -43,8 +43,11 @@ public class Reservation {
     @JoinColumn(name="property_id")
     private Property property;*/
 
+    @Column(name="payment_id")
+    private Integer paymentId;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id")
+    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id",insertable=false ,updatable = false)
     private PaymentDetails paymentDetails;
 
 }

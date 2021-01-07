@@ -30,7 +30,6 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
     @Query("UPDATE Property p SET " +
             "p.country = :country , " +
-            "p.country = :country , " +
             "p.address = :address , " +
             "p.price = :price , " +
             "p.description = :description , " +
@@ -54,7 +53,12 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
     @Query(value = "INSERT INTO Property(propertyId,country,address,price,description,propertyType,available_from_date,available_to_date) " +
             "VALUES (:property_id,:country,:address,:price,:description,:property_type,:available_from_date, :available_to_date) " +
             "WHERE p.userId = :user_id", nativeQuery = true)
-    Property addPropertyByUserId(@Param("property_id")Integer propertyId, @Param("country")String country, @Param("address")String address
-            ,@Param("price")float price, @Param("description")String description, @Param("property_type")String propertyType,
-                                         @Param("available_from_date")Date availableFrom, @Param("available_to_date")Date availableTo);
+    Property addPropertyByUserId(@Param("property_id")Integer propertyId,
+                                 @Param("country")String country,
+                                 @Param("address")String address,
+                                 @Param("price")float price,
+                                 @Param("description")String description,
+                                 @Param("property_type")String propertyType,
+                                 @Param("available_from_date")Date availableFrom,
+                                 @Param("available_to_date")Date availableTo);
 }
