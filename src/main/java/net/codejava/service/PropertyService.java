@@ -17,7 +17,7 @@ public interface PropertyService {
 
     PropertyDto updatePropertyByPropertyId(PropertyDto propertyDto, Integer propertyId);
 
-    boolean delete(Integer propertyId);
+    boolean deletePropertyByPropertyId(Integer propertyId);
     List<PropertyDto> getProperties();
     PropertyDto addPropertyByUserId(Integer propertyId,
                                           String country,
