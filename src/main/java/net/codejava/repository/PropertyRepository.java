@@ -4,6 +4,7 @@ import net.codejava.model.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -42,9 +43,9 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
                                                @Param("propertytype") String propertyType,
                                                @Param("property_id") Integer propertyId
     );
-
-    @Query("DELETE Property p WHERE p.propertyId = :property_id")
-    public Property deletePropertyByPropertyId(@Param("property_id") Integer propertyId);
+    @Modifying
+    @Query("DELETE Property WHERE propertyId = :property_id")
+    public boolean deletePropertyByPropertyId(@Param("property_id") Integer propertyId);
 
     @Query("SELECT p FROM Property p")
     public List<Property> getProperties();

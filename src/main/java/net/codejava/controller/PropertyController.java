@@ -3,6 +3,7 @@ package net.codejava.controller;
 import java.util.List;
 
 import net.codejava.dto.PropertyDto;
+import net.codejava.dto.ReservationDto;
 import net.codejava.model.Property;
 import net.codejava.model.User;
 import net.codejava.repository.PropertyRepository;
@@ -38,19 +39,7 @@ public class PropertyController {
     private HttpServletRequest request;
 
 
-    /*@RequestMapping("/")
-    public String viewHomePage(Model model) {
 
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String username = loggedInUser.getName();
-        User user_repo = userRepository.getUserByUsername(username);
-        Integer user_id = user_repo.getUserId();
-        //List<Property> listProperties = service.listAllByUserId(user_id);
-
-        //model.addAttribute("listProperties", listProperties);
-
-        return "index";
-    }*/
 
     @GetMapping("property/{propertyId}")
     public PropertyDto getPropertyByPropertyId(@PathVariable Integer propertyId) {
@@ -69,22 +58,32 @@ public class PropertyController {
         return propertyService.getProperties();
     }
 
-    /*@RequestMapping("/new")
+    @GetMapping("/propertiesbyuserid/{userId}")
+    public List<PropertyDto> getPropertiesByUserId(@PathVariable Integer userId) {
+        List<PropertyDto> propertiesByUserId = propertyService.getPropertiesByUserId(userId);
+        return propertiesByUserId;
+    }
+
+    @DeleteMapping("property/{propertyId}")
+    public boolean deleteProperty(@PathVariable Integer propertyId) {
+        return propertyService.deletePropertyByPropertyId(propertyId);
+    }
+   /* @RequestMapping("/new")
     public String showNewPropertyForm(Model model) {
         Property property = new Property();
         model.addAttribute("property", property);
 
         return "new_product";
-    }*/
+    }
 
-    /*@RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveProperty(@ModelAttribute("property") Property property) {
         service.save(property);
 
         return "redirect:/";
-    }*/
+    }
 
-    /*@RequestMapping("/edit/{id}")
+    @RequestMapping("/edit/{id}")
     public ModelAndView showEditPropertyForm(@PathVariable(name = "id") Integer property_id) {
         ModelAndView mav = new ModelAndView("edit_product");
 
@@ -92,15 +91,15 @@ public class PropertyController {
         mav.addObject("property", property);
 
         return mav;
-    }*/
+    }
 
-    /*@RequestMapping("/delete/{id}")
+    @RequestMapping("/delete/{id}")
     public String deleteProperty(@PathVariable(name = "id") Integer property_id) {
         service.delete(property_id);
 
         return "redirect:/";
-    }*/
-    /*@GetMapping("/403")
+    }
+    @GetMapping("/403")
     public String error403(){
         return "403";
     }
@@ -113,7 +112,21 @@ public class PropertyController {
     @PostMapping("/login_success_handler")
     public String loginSuccessHandler() {
         System.out.println("Logging user login success...");
-        return "index";}*/
+        return "index";}
+
+    @RequestMapping("/")
+    public String viewHomePage(Model model) {
+
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        User user_repo = userRepository.getUserByUsername(username);
+        Integer user_id = user_repo.getUserId();
+        //List<Property> listProperties = service.listAllByUserId(user_id);
+
+        //model.addAttribute("listProperties", listProperties);
+
+        return "index";
+    }*/
 
 }
 

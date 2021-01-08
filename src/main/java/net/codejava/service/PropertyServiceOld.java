@@ -12,9 +12,9 @@ public class PropertyServiceOld {
     @Autowired
     private PropertyRepository repo;
 
-    public List<Property> listAll() {
+    /*public List<Property> listAll() {
         return repo.findAll();
-    }
+    }*/
 
     public List<Property> listAllByUserId(Integer userId) {
         return repo.getPropertiesByUserId(userId);

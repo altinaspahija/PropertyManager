@@ -51,10 +51,10 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public boolean delete(Integer propertyId) {
-        Optional<Property> propertyOpt = propertyRepository.findById(propertyId);
-        if (propertyOpt.isEmpty()) return false;
-        propertyRepository.delete(propertyOpt.get());
+    public boolean deletePropertyByPropertyId(Integer propertyId) {
+        Property propertyOpt = propertyRepository.getPropertyByPropertyId(propertyId);
+        if (propertyOpt==null) return false;
+        propertyRepository.deletePropertyByPropertyId(propertyId);
         return true;
     }
 
