@@ -94,6 +94,15 @@ public class PropertyController {
     public boolean deleteProperty(@PathVariable Integer propertyId) {
         return propertyService.deletePropertyByPropertyId(propertyId);
     }
+
+
+    //Testing Something
+    @GetMapping("/getPropertiesByPriceAndLocation")
+    public List<PropertyDto> getPropertiesByPriceAndLocation(@RequestParam float price,@RequestParam String country) {
+        return propertyService.getPropertyByPriceAndCountry(price,country);
+    }
+
+
    /* @RequestMapping("/new")
     public String showNewPropertyForm(Model model) {
         Property property = new Property();

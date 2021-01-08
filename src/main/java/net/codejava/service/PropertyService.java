@@ -26,4 +26,7 @@ public interface PropertyService {
                                           String propertyType,
                                           Date availableFrom,
                                           Date AvailableTo);
+
+    //testing something new.
+    List<PropertyDto> getPropertyByPriceAndCountry(float price, String country);
 }

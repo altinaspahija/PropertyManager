@@ -7,10 +7,7 @@ import net.codejava.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PropertyServiceImpl implements PropertyService {
@@ -73,4 +70,19 @@ public class PropertyServiceImpl implements PropertyService {
         Property property = PropertyDto.getProperty(PropertyDto.getPropertyDto(propertyById));
         return PropertyDto.getPropertyDto(propertyRepository.save(property));
     }
+
+    //testing something
+    public List<PropertyDto> getPropertyByPriceAndCountry(float price, String country) {
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+        allProperties.forEach(property -> {
+            if (property.getCountry().toLowerCase().equals(country.toLowerCase()))
+            {
+                if (property.getPrice() == price) retPropertyDtos.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+        return retPropertyDtos;
+    }
+
+
 }
