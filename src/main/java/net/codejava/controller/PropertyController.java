@@ -5,12 +5,14 @@ import java.util.List;
 
 import net.codejava.dto.PropertyDto;
 import net.codejava.dto.ReservationDto;
+import net.codejava.dto.UserDto;
 import net.codejava.model.Property;
 import net.codejava.model.User;
 import net.codejava.repository.PropertyRepository;
 import net.codejava.repository.UserRepository;
 import net.codejava.service.PropertyService;
 import net.codejava.service.PropertyServiceOld;
+import net.codejava.service.UserService;
 import net.codejava.service.impl.PropertyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,12 +37,25 @@ public class PropertyController {
     private PropertyRepository repo;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private UserService userService;
     private UserDetails userDetails;
     private UserDetailsService userDetailsService;
     private HttpServletRequest request;
 
-
+    @GetMapping("/{userId}/properties")
+    public List<PropertyDto> getProperties(@PathVariable Integer userId) {
+        UserDto user = userService.getUserByUserId(userId);
+        // User tempUser = UserDto.getUser(user);
+        String role = user.getRoleDescription();
+        if(role.equals("admin")) {
+            return propertyService.getProperties();
+        }
+        else
+        {
+            return null;
+        }
+    }
 
 
     @GetMapping("property/{propertyId}")
