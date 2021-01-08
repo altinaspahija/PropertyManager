@@ -20,10 +20,10 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
     @Query("SELECT p FROM Property p WHERE p.propertyId = :property_id")
     public Property getPropertyByPropertyId (@Param("property_id") Integer propertyId);
 
-    @Query("SELECT p FROM Property p WHERE (:price IS NULL OR p.price = :price) AND" +
+    @Query("SELECT p FROM Property p WHERE ((:price IS NULL OR p.price = :price) AND" +
             " (:country IS NULL OR p.country = :country) AND" +
             " (:available_from_date is NULL OR p.availableFrom = :available_from_date) AND" +
-            " (:available_to_date is NULL OR p.availableTo = :available_to_date)")
+            " (:available_to_date is NULL OR p.availableTo = :available_to_date))")
     public List<Property> getPropertiesByFilters (@Param("price") float price,
                                                   @Param("country")  String country,
                                                   @Param("available_from_date") Date availableFrom,

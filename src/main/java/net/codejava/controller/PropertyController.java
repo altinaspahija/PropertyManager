@@ -1,5 +1,6 @@
 package net.codejava.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import net.codejava.dto.PropertyDto;
@@ -12,6 +13,7 @@ import net.codejava.service.PropertyService;
 import net.codejava.service.PropertyServiceOld;
 import net.codejava.service.impl.PropertyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -62,6 +64,15 @@ public class PropertyController {
     public List<PropertyDto> getPropertiesByUserId(@PathVariable Integer userId) {
         List<PropertyDto> propertiesByUserId = propertyService.getPropertiesByUserId(userId);
         return propertiesByUserId;
+    }
+
+    @RequestMapping(path = "propertyfilter/{price}/{country}/{availableFrom}/{availableTo}",method = RequestMethod.GET)
+    public List<PropertyDto> getPropertiesByFilter(@PathVariable("price") float price,
+                                                   @PathVariable("country") String country,
+                                                   @PathVariable("availableFrom") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)  Date availableFrom,
+                                                   @PathVariable("availableTo") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date availableTo) {
+        List<PropertyDto> propertiesByFilter = propertyService.getPropertiesByFilters(price,country,availableFrom,availableTo);
+        return propertiesByFilter;
     }
 
     @DeleteMapping("property/{propertyId}")
