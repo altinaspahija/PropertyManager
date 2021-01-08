@@ -22,12 +22,16 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationRepository reservationRepository;
 
     @Override
-    public List<ReservationDto> getReservationByUserId(Integer userId) {
-        List<Reservation> reservationsByUserId = reservationRepository.getReservationsByUserId(userId);
-        List<ReservationDto> reservationDtos = new ArrayList<>();
+    public List<ReservationDto> getReservationsByUserId(Integer userId) {
+        List<ReservationDto> retReservations = new ArrayList<>();
+        List<Reservation> tempReservations = reservationRepository.findAll();
 
-        reservationsByUserId.forEach(reservation -> reservationDtos.add(ReservationDto.getReservationDto(reservation)));
-        return reservationDtos;
+        tempReservations.forEach(reservation -> {
+            if (reservation.getUserId().equals(userId)) {
+                retReservations.add(ReservationDto.getReservationDto(reservation));
+            }
+        });
+        return retReservations;
     }
 
     @Override

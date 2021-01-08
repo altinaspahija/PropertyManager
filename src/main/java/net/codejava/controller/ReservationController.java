@@ -8,9 +8,7 @@ import net.codejava.repository.ReservationRepository;
 import net.codejava.repository.UserRepository;
 import net.codejava.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,5 +45,10 @@ public class ReservationController {
         return reservationsByPropertyId;
     }
 
+    @GetMapping("/getReservationsByUserId")
+    public List<ReservationDto> getReservationsByUserId(@RequestParam Integer userId) {
+        List<ReservationDto> reservationsByUserId = reservationService.getReservationsByUserId(userId);
+        return reservationsByUserId;
+    }
 
 }

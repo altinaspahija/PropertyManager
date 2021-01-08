@@ -4,6 +4,7 @@ package net.codejava.service;
 
 
 
+import net.codejava.dto.PropertyDto;
 import net.codejava.dto.UserDto;
 
 import java.util.Date;
@@ -24,4 +25,6 @@ public interface UserService {
                                     String password,
                                     String phoneNumber,
                                     boolean enabled);
+
+    UserDto addUser(UserDto userDto);
 }

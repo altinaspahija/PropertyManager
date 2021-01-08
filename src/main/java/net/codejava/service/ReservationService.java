@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ReservationService {
-    List<ReservationDto> getReservationByUserId(Integer userId);
+    List<ReservationDto> getReservationsByUserId(Integer userId);
 
     List<ReservationDto> getReservationsByPropertyId(Integer propertyId);
 

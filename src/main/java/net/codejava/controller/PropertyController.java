@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 
 @RestController
@@ -43,8 +44,8 @@ public class PropertyController {
     private UserDetailsService userDetailsService;
     private HttpServletRequest request;
 
-    @GetMapping("/{userId}/properties")
-    public List<PropertyDto> getProperties(@PathVariable Integer userId) {
+    @GetMapping("/propertiesAuth")
+    public List<PropertyDto> getPropertiesAuth(@RequestParam Integer userId) {
         UserDto user = userService.getUserByUserId(userId);
         // User tempUser = UserDto.getUser(user);
         String role = user.getRoleDescription();
@@ -58,8 +59,8 @@ public class PropertyController {
     }
 
 
-    @GetMapping("property/{propertyId}")
-    public PropertyDto getPropertyByPropertyId(@PathVariable Integer propertyId) {
+    @GetMapping("/property")
+    public PropertyDto getPropertyByPropertyId(@RequestParam Integer propertyId) {
         PropertyDto property = propertyService.getPropertyByPropertyId(propertyId);
         if (property == null)
         {
@@ -75,17 +76,17 @@ public class PropertyController {
         return propertyService.getProperties();
     }
 
-    @GetMapping("/propertiesbyuserid/{userId}")
-    public List<PropertyDto> getPropertiesByUserId(@PathVariable Integer userId) {
+    @GetMapping("/propertiesbyuserid")
+    public List<PropertyDto> getPropertiesByUserId(@RequestParam Integer userId) {
         List<PropertyDto> propertiesByUserId = propertyService.getPropertiesByUserId(userId);
         return propertiesByUserId;
     }
 
-    @RequestMapping(path = "propertyfilter/{price}/{country}/{availableFrom}/{availableTo}",method = RequestMethod.GET)
-    public List<PropertyDto> getPropertiesByFilter(@PathVariable("price") float price,
-                                                   @PathVariable("country") String country,
-                                                   @PathVariable("availableFrom") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)  Date availableFrom,
-                                                   @PathVariable("availableTo") @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) Date availableTo) {
+    @GetMapping("getPropertiesByFilter")
+    public List<PropertyDto> getPropertiesByFilter(@RequestParam float price,
+                                                   @RequestParam String country,
+                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date availableFrom,
+                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date availableTo) {
         List<PropertyDto> propertiesByFilter = propertyService.getPropertiesByFilters(price,country,availableFrom,availableTo);
         return propertiesByFilter;
     }
@@ -102,6 +103,10 @@ public class PropertyController {
         return propertyService.getPropertyByPriceAndCountry(price,country);
     }
 
+    @PostMapping("/addproperty")
+    public PropertyDto addProperty(@RequestBody PropertyDto propertyDto) {
+        return propertyService.addPropertyByUserId(propertyDto);
+    }
 
    /* @RequestMapping("/new")
     public String showNewPropertyForm(Model model) {

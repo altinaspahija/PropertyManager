@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
-    @Query("SELECT p FROM Property p WHERE p.userId = :user_id")
+    /*@Query("SELECT p FROM Property p WHERE p.userId = :user_id")
     public List<Property> getPropertiesByUserId(@Param("user_id") Integer userId);
 
     @Query("SELECT p FROM Property p WHERE p.propertyId = :property_id")
@@ -61,5 +61,5 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
                                  @Param("description")String description,
                                  @Param("property_type")String propertyType,
                                  @Param("available_from_date")Date availableFrom,
-                                 @Param("available_to_date")Date availableTo);
+                                 @Param("available_to_date")Date availableTo);*/
 }

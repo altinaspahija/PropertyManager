@@ -9,12 +9,12 @@ import java.util.List;
 
 @Service
 public class PropertyServiceOld {
-    @Autowired
+    /*@Autowired
     private PropertyRepository repo;
 
-    /*public List<Property> listAll() {
+    *//*public List<Property> listAll() {
         return repo.findAll();
-    }*/
+    }*//*
 
     public List<Property> listAllByUserId(Integer userId) {
         return repo.getPropertiesByUserId(userId);
@@ -30,5 +30,5 @@ public class PropertyServiceOld {
 
     public void delete(Integer property_id) {
         repo.deleteById(property_id);
-    }
+    }*/
 }

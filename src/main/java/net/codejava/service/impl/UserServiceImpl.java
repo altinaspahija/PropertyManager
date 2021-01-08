@@ -9,6 +9,7 @@ import net.codejava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,4 +60,13 @@ public class UserServiceImpl implements UserService {
         User user = UserDto.getUser(UserDto.getUserDto(userById));
         return UserDto.getUserDto(userRepository.save(user));
     }
+    @Transactional
+    @Override
+    public UserDto addUser(UserDto userDto) {
+        User user = UserDto.getUser(userDto);
+        userRepository.saveAndFlush(user);
+        return UserDto.getUserDto(user);
+    }
+
+
 }

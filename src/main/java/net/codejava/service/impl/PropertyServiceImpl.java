@@ -2,7 +2,9 @@ package net.codejava.service.impl;
 
 import net.codejava.dto.PropertyDto;
 import net.codejava.model.Property;
+import net.codejava.model.User;
 import net.codejava.repository.PropertyRepository;
+import net.codejava.repository.UserRepository;
 import net.codejava.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,31 +15,47 @@ import java.util.*;
 public class PropertyServiceImpl implements PropertyService {
     @Autowired
     private PropertyRepository propertyRepository;
-
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public List<PropertyDto> getPropertiesByUserId(Integer userId) {
-        List<Property> propertiesByUserId = propertyRepository.getPropertiesByUserId(userId);
-        List<PropertyDto> propertyDtos = new ArrayList<>();
+        List<PropertyDto> retProperties = new ArrayList<>();
+        List<Property> propertiesByUserId = propertyRepository.findAll();
 
-        propertiesByUserId.forEach(property -> propertyDtos.add(PropertyDto.getPropertyDto(property)));
-        return propertyDtos;
+        propertiesByUserId.forEach(property -> {
+            if (property.getUserId().equals(userId)){
+                retProperties.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+        return retProperties;
     }
 
     @Override
     public PropertyDto getPropertyByPropertyId(Integer propertyId) {
         Optional<Property> optionProperty = propertyRepository.findById(propertyId);
         if (optionProperty.isEmpty()) return null;
-        return PropertyDto.getPropertyDto(optionProperty.get());
+        Property tempProperty = optionProperty.get();
+        return PropertyDto.getPropertyDto(tempProperty);
     }
 
     @Override
     public List<PropertyDto> getPropertiesByFilters(float price, String country, Date availableFrom, Date availableTo) {
-        List<Property> propertiesByFilter = propertyRepository.getPropertiesByFilters(price, country, availableFrom, availableTo);
-        List<PropertyDto> propertyDtos = new ArrayList<>();
-
-        propertiesByFilter.forEach(property -> propertyDtos.add(PropertyDto.getPropertyDto(property)));
-        return propertyDtos;
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+        allProperties.forEach(property -> {
+            if (property.getCountry().toLowerCase().equals(country.toLowerCase()))
+            {
+                if (property.getPrice()==price) {
+                    if (property.getAvailableFrom().equals(availableFrom)){
+                        if (property.getAvailableTo().equals(availableTo)){
+                            retPropertyDtos.add(PropertyDto.getPropertyDto(property));
+                        }
+                    }
+                }
+            }
+        });
+        return retPropertyDtos;
     }
 
     @Override
@@ -49,9 +67,12 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public boolean deletePropertyByPropertyId(Integer propertyId) {
-        Property propertyOpt = propertyRepository.getPropertyByPropertyId(propertyId);
-        if (propertyOpt==null) return false;
-        propertyRepository.deletePropertyByPropertyId(propertyId);
+        Optional<Property> optionProperty = propertyRepository.findById(propertyId);
+        if (optionProperty.isEmpty()){
+            return false;
+        }
+        Property tempProperty = optionProperty.get();
+        propertyRepository.deleteById(tempProperty.getPropertyId());
         return true;
     }
 
@@ -64,12 +85,7 @@ public class PropertyServiceImpl implements PropertyService {
         return propertyDtos;
     }
 
-    @Override
-    public PropertyDto addPropertyByUserId(Integer propertyId, String country, String address, String description, String propertyType, Date availableFrom, Date AvailableTo) {
-        Property propertyById = propertyRepository.getPropertyByPropertyId(propertyId);
-        Property property = PropertyDto.getProperty(PropertyDto.getPropertyDto(propertyById));
-        return PropertyDto.getPropertyDto(propertyRepository.save(property));
-    }
+
 
     //testing something
     public List<PropertyDto> getPropertyByPriceAndCountry(float price, String country) {
@@ -84,5 +100,10 @@ public class PropertyServiceImpl implements PropertyService {
         return retPropertyDtos;
     }
 
-
+    @Override
+    public PropertyDto addPropertyByUserId(PropertyDto propertyDto) {
+        Property property = PropertyDto.getProperty(propertyDto);
+        propertyRepository.save(property);
+        return PropertyDto.getPropertyDto(property);
+    }
 }

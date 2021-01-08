@@ -19,14 +19,9 @@ public interface PropertyService {
 
     boolean deletePropertyByPropertyId(Integer propertyId);
     List<PropertyDto> getProperties();
-    PropertyDto addPropertyByUserId(Integer propertyId,
-                                          String country,
-                                          String address,
-                                          String description,
-                                          String propertyType,
-                                          Date availableFrom,
-                                          Date AvailableTo);
 
     //testing something new.
     List<PropertyDto> getPropertyByPriceAndCountry(float price, String country);
+
+    PropertyDto addPropertyByUserId(PropertyDto propertyDto);
 }
