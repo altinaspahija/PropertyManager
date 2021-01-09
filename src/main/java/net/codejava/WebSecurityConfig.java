@@ -16,15 +16,14 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@EnableWebSecurity
-
-
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	/*@Autowired
+
+	@Autowired
 	private DataSource dataSource;
 
-	@Bean
+/*	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
 	}
@@ -33,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	*//*
+
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -42,12 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		return authProvider;
 	}
-*//*
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		*//*
+
 		auth.authenticationProvider(authenticationProvider());
-		 *//*
+
 		auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
 
 		.dataSource(dataSource)
@@ -60,12 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"join users u on u.user_id = ur.user_id\n" +
 						"where u.username=?")
 		;
-	}
+	}*/
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
+
+	    http.csrf().disable();
+		/*http.authorizeRequests()
 			.antMatchers("/").hasAnyAuthority("Host","Guest")
 			.antMatchers("/new").hasAuthority("Host")
 			.antMatchers("/edit/**").hasAuthority("Host")
@@ -77,9 +77,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.logout().permitAll()
 				.and()
-				.exceptionHandling().accessDeniedPage("/403");
+				.exceptionHandling().accessDeniedPage("/403");*/
 
-*//*
+/*
 			.and()
 			.formLogin()
 				.permitAll()
@@ -109,4 +109,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 	}*/
-}
+}}
