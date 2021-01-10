@@ -10,13 +10,13 @@ import java.sql.Date;
 
 @Data
 public class ReservationDto {
-    private Integer reservationId;
+    private int reservationId;
     private Date checkIn;
     private Date checkOut;
     private float price;
-    private Integer propertyId;
-    private Integer userId;
-    private Integer paymentId;
+    private int propertyId;
+    private int userId;
+    private int paymentId;
 
     public static Reservation getReservation(ReservationDto reservationDto){
         if (reservationDto==null) return null;

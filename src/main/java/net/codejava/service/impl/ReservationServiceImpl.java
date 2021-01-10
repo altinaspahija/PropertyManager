@@ -27,7 +27,7 @@ public class ReservationServiceImpl implements ReservationService {
         List<Reservation> tempReservations = reservationRepository.findAll();
 
         tempReservations.forEach(reservation -> {
-            if (reservation.getUserId().equals(userId)) {
+            if (reservation.getUserId()==userId) {
                 retReservations.add(ReservationDto.getReservationDto(reservation));
             }
         });
@@ -40,7 +40,7 @@ public class ReservationServiceImpl implements ReservationService {
         List<ReservationDto> retReservations = new ArrayList<>();
         List<Reservation> tempReservations = reservationRepository.findAll();
         tempReservations.forEach(reservation -> {
-            if (reservation.getPropertyId().equals(propertyId)) {
+            if (reservation.getPropertyId()==propertyId) {
                 retReservations.add(ReservationDto.getReservationDto(reservation));
             }
         });

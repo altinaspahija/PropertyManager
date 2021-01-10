@@ -24,4 +24,6 @@ public interface PropertyService {
     List<PropertyDto> getPropertyByPriceAndCountry(float price, String country);
 
     PropertyDto addProperty(PropertyDto propertyDto);
+
+    List<PropertyDto> getPropertiesByAvailability(String country, float minPrice, float maxPrice,Date start, Date end);
 }

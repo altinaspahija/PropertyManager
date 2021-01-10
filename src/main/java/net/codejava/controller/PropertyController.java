@@ -103,6 +103,11 @@ public class PropertyController {
         return propertyService.updatePropertyByPropertyId(propertyDto, propertyId);
     }
 
+    @GetMapping("filterProperties")
+    public List<PropertyDto> getFilterProperties(@RequestParam String country,@RequestParam float minPrice,@RequestParam float maxPrice,@RequestParam Date start,@RequestParam Date end){
+        return  propertyService.getPropertiesByAvailability(country,minPrice,maxPrice,start,end);
+    }
+
    /* @RequestMapping("/new")
     public String showNewPropertyForm(Model model) {
         Property property = new Property();
