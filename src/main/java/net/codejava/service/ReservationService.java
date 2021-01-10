@@ -19,13 +19,9 @@ public interface ReservationService {
     ReservationDto updateReservation(ReservationDto reservationDto,
                                      Integer reservationId);
 
-    ReservationDto addReservationByUserId(Integer reservationId,
-                                          Date checkIn,
-                                          Date checkOut,
-                                          float price,
-                                          Integer propertyId,
-                                          Integer paymentId,
-                                          Integer userId);
+    ReservationDto addReservation(ReservationDto reservationDto);
 
     List<ReservationDto> getReservations();
+
+    List<ReservationDto> getReservationsByDates(Date start, Date end);
 }

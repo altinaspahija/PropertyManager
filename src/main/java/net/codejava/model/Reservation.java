@@ -13,6 +13,9 @@ public class Reservation {
     @Column(name="reservation_id")
     private int reservationId;
 
+    @Column(name="payment_id")
+    private int paymentId;
+
     @Column(name="checkin")
     private Date checkIn;
 
@@ -21,9 +24,6 @@ public class Reservation {
 
     @Column(name="price")
     private float price;
-
-    //@Column(name="property_id")
-    //private int propertyId;
 
     @Column(name="property_id")
     private Integer propertyId;
@@ -40,8 +40,8 @@ public class Reservation {
     private User client;
 
 
-    @Column(name="payment_id")
-    private Integer paymentId;
+ /*   @Column(name="payment_id")
+    private Integer paymentId;*/
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id", referencedColumnName = "payment_id",insertable=false ,updatable = false)

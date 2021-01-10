@@ -1,6 +1,6 @@
 package net.codejava.controller;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import net.codejava.dto.PropertyDto;

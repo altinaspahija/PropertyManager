@@ -12,12 +12,9 @@ public class PaymentDetails {
 
     //Generating property Id.
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="payment_id")
     private int paymentId;
-
-    @Column(name="reservation_id")
-    private int reservationId;
 
     @Column(name="payment_date")
     private Date paymentDate;

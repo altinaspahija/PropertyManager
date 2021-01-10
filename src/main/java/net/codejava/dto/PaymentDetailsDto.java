@@ -26,7 +26,6 @@ public class PaymentDetailsDto {
         paymentDetails.setCreditCardNo(paymentDetailsDto.getCreditCardNo());
         paymentDetails.setExpiryDate(paymentDetailsDto.getExpiryDate());
         paymentDetails.setPaymentDate(paymentDetailsDto.getPaymentDate());
-        paymentDetails.setReservationId(paymentDetailsDto.getReservationId());
         paymentDetails.setCvv(paymentDetailsDto.getCvv());
 
         return paymentDetails;
@@ -40,7 +39,6 @@ public class PaymentDetailsDto {
         paymentDetailsDto.setCardHolderName(paymentDetails.getCardHolderName());
         paymentDetailsDto.setCreditCardNo(paymentDetails.getCreditCardNo());
         paymentDetailsDto.setPaymentDate(paymentDetails.getPaymentDate());
-        paymentDetailsDto.setReservationId(paymentDetails.getReservationId());
         paymentDetailsDto.setExpiryDate(paymentDetails.getExpiryDate());
         paymentDetailsDto.setCvv(paymentDetails.getCvv());
 

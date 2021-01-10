@@ -36,11 +36,16 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationDto> getReservationsByPropertyId(Integer propertyId) {
-        List<Reservation> reservationsByPropertyId = reservationRepository.getReservationsByPropertyId(propertyId);
-        List<ReservationDto> reservationDtos = new ArrayList<>();
 
-        reservationsByPropertyId.forEach(reservation -> reservationDtos.add(ReservationDto.getReservationDto(reservation)));
-        return reservationDtos;
+        List<ReservationDto> retReservations = new ArrayList<>();
+        List<Reservation> tempReservations = reservationRepository.findAll();
+        tempReservations.forEach(reservation -> {
+            if (reservation.getPropertyId().equals(propertyId)) {
+                retReservations.add(ReservationDto.getReservationDto(reservation));
+            }
+        });
+        return retReservations;
+
     }
 
     @Override
@@ -52,10 +57,18 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean deleteReservation(Integer reservationId) {
+
         Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
         if (reservationOpt.isEmpty()) return false;
-        reservationRepository.delete(reservationOpt.get());
+        Reservation tempReservation = reservationOpt.get();
+        reservationRepository.deleteById(tempReservation.getReservationId());
+
         return true;
+   /*     Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
+        if (reservationOpt.isEmpty()) return false;
+        reservationRepository.delete(reservationOpt.get());
+        return true;*/
+
     }
 
 
@@ -67,10 +80,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationDto addReservationByUserId(Integer reservationId, Date checkIn, Date checkOut, float price, Integer propertyId, Integer paymentId, Integer userId) {
-        Reservation reservationById = reservationRepository.getReservationByReservationId(reservationId);
-        Reservation reservation = ReservationDto.getReservation(ReservationDto.getReservationDto(reservationById));
-        return ReservationDto.getReservationDto(reservationRepository.save(reservation));
+    public ReservationDto addReservation(ReservationDto reservationDto) {
+        Reservation reservation = ReservationDto.getReservation(reservationDto);
+        reservationRepository.save(reservation);
+        return ReservationDto.getReservationDto(reservation);
     }
 
     @Override
@@ -80,5 +93,19 @@ public class ReservationServiceImpl implements ReservationService {
 
         reservations.forEach(reservation -> reservationDtos.add(ReservationDto.getReservationDto(reservation)));
         return reservationDtos;
+    }
+
+    public List<ReservationDto> getReservationsByDates(Date start, Date end){
+        List<ReservationDto> retReservations = new ArrayList<>();
+        List<Reservation> tempReservations = reservationRepository.findAll();
+
+
+        tempReservations.forEach(reservation -> {
+            if ((reservation.getCheckIn().after(start) || reservation.getCheckIn().equals(start))
+                    && reservation.getCheckIn().before(end) || reservation.getCheckIn().equals(end)) {
+                retReservations.add(ReservationDto.getReservationDto(reservation));
+            }
+        });
+        return retReservations;
     }
 }

@@ -3,7 +3,7 @@ package net.codejava.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Data
@@ -12,7 +12,7 @@ import java.util.List;
 public class Property {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="property_id")
     private Integer propertyId;
 
