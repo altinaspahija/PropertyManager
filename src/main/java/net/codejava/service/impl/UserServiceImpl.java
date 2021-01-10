@@ -52,21 +52,11 @@ public class UserServiceImpl implements UserService {
         return userDtos;
     }
 
-
-
-    @Override
-    public UserDto addUserByUserId(Integer userId, String username, String fullname, String password, String phoneNumber, boolean enabled) {
-        User userById = userRepository.getUserByUserId(userId);
-        User user = UserDto.getUser(UserDto.getUserDto(userById));
-        return UserDto.getUserDto(userRepository.save(user));
-    }
-    @Transactional
     @Override
     public UserDto addUser(UserDto userDto) {
         User user = UserDto.getUser(userDto);
         userRepository.saveAndFlush(user);
         return UserDto.getUserDto(user);
     }
-
 
 }

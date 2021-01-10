@@ -87,6 +87,7 @@ public class PropertyServiceImpl implements PropertyService {
         Property tempProperty = optionProperty.get();
         propertyRepository.deleteById(tempProperty.getPropertyId());
         return true;
+
     }
 
     @Override

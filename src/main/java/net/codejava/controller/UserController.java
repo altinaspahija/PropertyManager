@@ -21,20 +21,37 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping("/getUsers")
     public List<UserDto> getUsers() {
         return userService.getUsers();
     }
 
-    @GetMapping("/users/{userId}")
-    public UserDto getUsersByUserId(@PathVariable Integer userId) {
+    @GetMapping("/getUserByUserId")
+    public UserDto getUsersByUserId(@RequestParam Integer userId) {
        UserDto user = userService.getUserByUserId(userId);
        return user;
     }
 
-    @PostMapping("/adduser")
+    @PostMapping("/addUser")
     public UserDto addUser(@RequestBody UserDto userDto) {
         return userService.addUser(userDto);
     }
+
+
+    @PutMapping("updateUserByUserId")
+    public UserDto updateUserbyUserId (@RequestParam Integer userId, @RequestBody UserDto userDto){
+        return userService.updateUserByUserId(userDto,userId);
+    }
+
+    @DeleteMapping("deleteUserByUserId")
+    public boolean deleteUserByUserId(@RequestParam Integer userId) {
+        return userService.deleteUserByUserId(userId);
+    }
+
+
+
+
+
+
 
 }

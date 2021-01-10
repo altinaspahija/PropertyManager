@@ -31,8 +31,8 @@ public class PaymentDetails {
     @Column(name="exp_date")
     private Date expiryDate;
 
-    @Column(name="csv")
-    private int csv;
+    @Column(name="cvv")
+    private int cvv;
 
     @OneToOne(mappedBy = "paymentDetails")
     private Reservation reservation;

@@ -2,11 +2,13 @@ package net.codejava.repository;
 
 import net.codejava.model.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.transaction.Transactional;
 import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 
     @Query("SELECT r FROM Reservation r WHERE r.reservationId = :reservation_id")
     public Reservation getReservationByReservationId(@Param("reservation_id") Integer reservationId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE Reservation r WHERE r.propertyId = : property_id")
+    public Reservation deleteReservationbyProperty(@Param("property_id") Integer property_id);
 
     @Query("DELETE Reservation r WHERE r.reservationId = : reservation_id")
     public Reservation deleteReservation(@Param("reservation_id") Integer reservationId);

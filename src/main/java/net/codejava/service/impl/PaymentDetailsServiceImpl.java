@@ -45,6 +45,6 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
                 paymentDetails.getCardHolderName(),
                 paymentDetails.getCreditCardNo(),
                 paymentDetails.getExpiryDate(),
-                paymentDetails.getCsv()));
+                paymentDetails.getCvv()));
     }
 }

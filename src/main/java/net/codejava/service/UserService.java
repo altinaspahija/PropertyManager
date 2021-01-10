@@ -14,17 +14,9 @@ public interface UserService {
 
 
     UserDto getUserByUserId(Integer userId);
-
     UserDto updateUserByUserId(UserDto userDto, Integer userId);
-
-    boolean deleteUserByUserId(Integer propertyId);
+    boolean deleteUserByUserId(Integer userId);
     List<UserDto> getUsers();
-    UserDto addUserByUserId(Integer userId,
-                                    String username,
-                                    String fullname,
-                                    String password,
-                                    String phoneNumber,
-                                    boolean enabled);
-
     UserDto addUser(UserDto userDto);
+
 }

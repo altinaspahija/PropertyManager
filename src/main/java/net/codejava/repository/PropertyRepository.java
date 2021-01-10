@@ -8,13 +8,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
 @Repository
 public interface PropertyRepository extends JpaRepository<Property, Integer> {
 
-    /*@Query("SELECT p FROM Property p WHERE p.userId = :user_id")
+    @Query("SELECT p FROM Property p WHERE p.userId = :user_id")
     public List<Property> getPropertiesByUserId(@Param("user_id") Integer userId);
 
     @Query("SELECT p FROM Property p WHERE p.propertyId = :property_id")
@@ -43,9 +44,10 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
                                                @Param("propertytype") String propertyType,
                                                @Param("property_id") Integer propertyId
     );
+    @Transactional
     @Modifying
     @Query("DELETE Property WHERE propertyId = :property_id")
-    public boolean deletePropertyByPropertyId(@Param("property_id") Integer propertyId);
+    void deletePropertyByPropertyId(@Param("property_id") Integer propertyId);
 
     @Query("SELECT p FROM Property p")
     public List<Property> getProperties();
@@ -61,5 +63,7 @@ public interface PropertyRepository extends JpaRepository<Property, Integer> {
                                  @Param("description")String description,
                                  @Param("property_type")String propertyType,
                                  @Param("available_from_date")Date availableFrom,
-                                 @Param("available_to_date")Date availableTo);*/
+                                 @Param("available_to_date")Date availableTo);
+
+
 }

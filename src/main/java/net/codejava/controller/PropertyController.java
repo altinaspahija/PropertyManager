@@ -1,32 +1,21 @@
 package net.codejava.controller;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import net.codejava.dto.PropertyDto;
-import net.codejava.dto.ReservationDto;
 import net.codejava.dto.UserDto;
-import net.codejava.model.Property;
-import net.codejava.model.User;
 import net.codejava.repository.PropertyRepository;
 import net.codejava.repository.UserRepository;
 import net.codejava.service.PropertyService;
-import net.codejava.service.PropertyServiceOld;
 import net.codejava.service.UserService;
-import net.codejava.service.impl.PropertyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.transaction.Transactional;
 
 
 @RestController
@@ -85,14 +74,15 @@ public class PropertyController {
     @GetMapping("getPropertiesByFilter")
     public List<PropertyDto> getPropertiesByFilter(@RequestParam float price,
                                                    @RequestParam String country,
-                                                   @RequestParam Date availableFrom,
-                                                   @RequestParam Date availableTo) {
-        List<PropertyDto> propertiesByFilter = propertyService.getPropertiesByFilters(price,country,availableFrom,availableTo);
-        return propertiesByFilter;
+                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date availableFrom,
+                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date availableTo) {
+       // List<PropertyDto> propertiesByFilter = propertyService.getPropertiesByFilters(price,country,availableFrom,availableTo);
+      //  return propertiesByFilter;
+        return null;
     }
 
-    @DeleteMapping("deleteproperty")
-    public boolean deleteProperty(@RequestParam Integer propertyId) {
+    @DeleteMapping("property/{propertyId}")
+    public boolean deleteProperty(@PathVariable Integer propertyId) {
         return propertyService.deletePropertyByPropertyId(propertyId);
     }
 

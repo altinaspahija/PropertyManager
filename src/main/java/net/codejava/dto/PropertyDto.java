@@ -43,8 +43,8 @@ public class PropertyDto {
         propertyDto.setPrice(property.getPrice());
         propertyDto.setDescription(property.getDescription());
         propertyDto.setPropertyType(property.getPropertyType());
-        propertyDto.setAvailableFrom(property.getAvailableFrom());
-        propertyDto.setAvailableTo(property.getAvailableTo());
+       // propertyDto.setAvailableFrom(property.getAvailableFrom;());
+       // propertyDto.setAvailableTo(property.getAvailableTo());
         propertyDto.setUserId(property.getUserId());
 
         return propertyDto;

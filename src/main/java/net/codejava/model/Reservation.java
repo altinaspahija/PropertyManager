@@ -29,7 +29,7 @@ public class Reservation {
     private Integer propertyId;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="property_id",insertable=false ,updatable = false)
+    @JoinColumn(name="property_id",insertable=false ,updatable = false, nullable = false)
     private Property property;
 
     @Column(name="user_id")
@@ -39,9 +39,6 @@ public class Reservation {
     @JoinColumn(name="user_id",insertable=false ,updatable = false)
     private User client;
 
-    /*@ManyToOne
-    @JoinColumn(name="property_id")
-    private Property property;*/
 
     @Column(name="payment_id")
     private Integer paymentId;

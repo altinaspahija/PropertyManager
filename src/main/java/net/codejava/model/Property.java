@@ -3,7 +3,7 @@ package net.codejava.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -28,7 +28,7 @@ public class Property {
     @Column(name="description")
     private String description;
 
-    @Column(name="propertytype")
+    @Column(name="property_type")
     private String propertyType;
 
     @Column(name="available_from_date")
@@ -47,6 +47,11 @@ public class Property {
     @OneToMany
     @JoinColumn(name="reservation_id")
     private List<Reservation> reservation;
+
+    @OneToMany
+    @JoinColumn(name="photo_id")
+    private List<Photo> photo;
+
     /*public Integer getId() {
         return propertyId;
     }

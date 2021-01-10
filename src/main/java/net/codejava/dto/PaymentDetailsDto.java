@@ -15,7 +15,7 @@ public class PaymentDetailsDto {
     private String cardHolderName;
     private long creditCardNo;
     private Date expiryDate;
-    private int csv;
+    private int cvv;
 
     public static PaymentDetails getPaymentDetails(PaymentDetailsDto paymentDetailsDto) {
         if (paymentDetailsDto==null) return null;
@@ -27,7 +27,7 @@ public class PaymentDetailsDto {
         paymentDetails.setExpiryDate(paymentDetailsDto.getExpiryDate());
         paymentDetails.setPaymentDate(paymentDetailsDto.getPaymentDate());
         paymentDetails.setReservationId(paymentDetailsDto.getReservationId());
-        paymentDetails.setCsv(paymentDetailsDto.getCsv());
+        paymentDetails.setCvv(paymentDetailsDto.getCvv());
 
         return paymentDetails;
     }
@@ -42,7 +42,7 @@ public class PaymentDetailsDto {
         paymentDetailsDto.setPaymentDate(paymentDetails.getPaymentDate());
         paymentDetailsDto.setReservationId(paymentDetails.getReservationId());
         paymentDetailsDto.setExpiryDate(paymentDetails.getExpiryDate());
-        paymentDetailsDto.setCsv(paymentDetails.getCsv());
+        paymentDetailsDto.setCvv(paymentDetails.getCvv());
 
         return paymentDetailsDto;
     }
