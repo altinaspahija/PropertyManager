@@ -4,6 +4,8 @@ import lombok.Data;
 import net.codejava.model.PaymentDetails;
 
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.sql.Date;
 
 @Data

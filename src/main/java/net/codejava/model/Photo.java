@@ -20,8 +20,8 @@ public class Photo {
     @Column(name="photo")
     private byte photo;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    /*@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="property_id",insertable=false ,updatable = false)
-    private Property property;
+    private Property property;*/
 
 }

@@ -12,9 +12,9 @@ import java.util.List;
 public class Property {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="property_id")
-    private Integer propertyId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="property_id", insertable = true)
+    private int propertyId;
 
     @Column(name="country")
     private String country;
@@ -48,9 +48,9 @@ public class Property {
     @JoinColumn(name="reservation_id")
     private List<Reservation> reservation;
 
-    @OneToMany
+    /*@OneToMany
     @JoinColumn(name="photo_id")
-    private List<Photo> photo;
+    private List<Photo> photo;*/
 
     /*public Integer getId() {
         return propertyId;

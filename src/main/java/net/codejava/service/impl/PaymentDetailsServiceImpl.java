@@ -7,44 +7,69 @@ import net.codejava.model.Property;
 import net.codejava.repository.PaymentDetailsRepository;
 import net.codejava.service.PaymentDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class PaymentDetailsServiceImpl implements PaymentDetailsService {
 
     @Autowired
     private PaymentDetailsRepository paymentDetailsRepository;
 
+
     @Override
-    public List<PaymentDetailsDto> getPaymentDetailsByReservationId(Integer reservationId) {
-        List<PaymentDetails> paymentDetails = paymentDetailsRepository.getPaymentDetailsByUserId(reservationId);
-        List<PaymentDetailsDto> paymentDetailsDtos = new ArrayList<>();
-
-        paymentDetails.forEach(payment -> paymentDetailsDtos.add(PaymentDetailsDto.getPaymentDetailsDto(payment)));
-        return paymentDetailsDtos;
-
+    public List<PaymentDetailsDto> getAllPaymentDetails() {
+        List<PaymentDetails> allPaymentDetails = paymentDetailsRepository.findAll();
+        List<PaymentDetailsDto> paymentDetailsDtoList = new ArrayList<>();
+        allPaymentDetails.forEach(paymentDetails -> paymentDetailsDtoList.add(PaymentDetailsDto.getPaymentDetailsDto(paymentDetails)));
+        return paymentDetailsDtoList;
     }
 
     @Override
-    public List<PaymentDetailsDto> getPaymentDetailsByUserId(Integer userId) {
-        List<PaymentDetails> paymentDetails = paymentDetailsRepository.getPaymentDetailsByUserId(userId);
-        List<PaymentDetailsDto> paymentDetailsDtos = new ArrayList<>();
-
-        paymentDetails.forEach(payment -> paymentDetailsDtos.add(PaymentDetailsDto.getPaymentDetailsDto(payment)));
-        return paymentDetailsDtos;
+    public PaymentDetailsDto getPaymentDetailsByPaymentId(int paymentId) {
+        Optional<PaymentDetails> optionPaymentDetails = paymentDetailsRepository.findById(paymentId);
+        if (optionPaymentDetails.isEmpty()) return null;
+        PaymentDetails tempPaymentDetails = optionPaymentDetails.get();
+        return PaymentDetailsDto.getPaymentDetailsDto(tempPaymentDetails);
     }
 
     @Override
     public PaymentDetailsDto addPaymentDetails(PaymentDetailsDto paymentDetailsDto) {
         PaymentDetails paymentDetails = PaymentDetailsDto.getPaymentDetails(paymentDetailsDto);
-        return PaymentDetailsDto.getPaymentDetailsDto(paymentDetailsRepository.addPaymentDetails(
-                paymentDetails.getPaymentId(),
-                paymentDetails.getReservationId(),
-                paymentDetails.getPaymentDate(),
-                paymentDetails.getCardHolderName(),
-                paymentDetails.getCreditCardNo(),
-                paymentDetails.getExpiryDate(),
-                paymentDetails.getCvv()));
+        paymentDetailsRepository.save(paymentDetails);
+        return PaymentDetailsDto.getPaymentDetailsDto(paymentDetails);
+    }
+
+
+
+    @Override
+    public boolean deletePaymentDetailsByPaymentId(int paymentId) {
+        Optional<PaymentDetails> optionPaymentDetails = paymentDetailsRepository.findById(paymentId);
+        if(optionPaymentDetails.isEmpty()){
+            return false;
+        }
+        PaymentDetails tempPaymentDetails = optionPaymentDetails.get();
+        paymentDetailsRepository.deleteById(tempPaymentDetails.getPaymentId());
+        return true;
+    }
+
+    @Override
+    public PaymentDetailsDto updatePaymentDetailsByDetailsId(PaymentDetailsDto paymentDetailsDto, int paymentId) {
+        Optional<PaymentDetails> optionPayment = paymentDetailsRepository.findById(paymentId);
+        if(optionPayment.isEmpty()){
+            return null;
+        }
+
+        PaymentDetails retPayment = optionPayment.get();
+        retPayment.setPaymentDate(paymentDetailsDto.getPaymentDate());
+        retPayment.setCardHolderName(paymentDetailsDto.getCardHolderName());
+        retPayment.setCreditCardNo(paymentDetailsDto.getCreditCardNo());
+        retPayment.setExpiryDate(paymentDetailsDto.getExpiryDate());
+        retPayment.setCvv(paymentDetailsDto.getCvv());
+
+        return PaymentDetailsDto.getPaymentDetailsDto(paymentDetailsRepository.save(retPayment));
     }
 }

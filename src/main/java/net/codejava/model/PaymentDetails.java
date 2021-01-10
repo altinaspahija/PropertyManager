@@ -7,12 +7,12 @@ import java.sql.Date;
 
 @Data
 @Entity
-@Table(name = "paymentDetails")
+@Table(name = "payment_details")
 public class PaymentDetails {
 
     //Generating property Id.
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="payment_id")
     private int paymentId;
 

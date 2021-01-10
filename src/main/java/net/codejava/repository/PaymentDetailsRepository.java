@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface PaymentDetailsRepository extends JpaRepository<PaymentDetails, Integer> {
 
-    @Query("SELECT p FROM PaymentDetails p WHERE p.reservationId = :reservation_id")
+    /*@Query("SELECT p FROM PaymentDetails p WHERE p.reservationId = :reservation_id")
     public List<PaymentDetails> getPaymentDetailsByReservationId(@Param("reservation_id") Integer reservationId);
 
     @Query("SELECT p FROM PaymentDetails p JOIN Reservation r " +
@@ -33,7 +33,7 @@ public interface PaymentDetailsRepository extends JpaRepository<PaymentDetails, 
                                  @Param("card_holder_name")String cardHolderName,
                                  @Param("credit_card_no")long creditCardNo,
                                  @Param("exp_date")Date expDate,
-                                 @Param("csv") Integer csv);
+                                 @Param("csv") Integer csv);*/
 }
 
 

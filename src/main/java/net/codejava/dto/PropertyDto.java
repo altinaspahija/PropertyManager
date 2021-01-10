@@ -8,7 +8,7 @@ import java.sql.Date;
 @Data
 public class PropertyDto {
 
-    private Integer propertyId;
+    private int propertyId;
     private String country;
     private String address;
     private float price;
@@ -16,7 +16,7 @@ public class PropertyDto {
     private String propertyType;
     private Date availableFrom;
     private Date availableTo;
-    private Integer userId;
+    private int userId;
 
     public static Property getProperty(PropertyDto propertyDto) {
         if (propertyDto==null) return null;

@@ -92,10 +92,10 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public List<PropertyDto> getProperties() {
-        List<Property> properties = propertyRepository.findAll();
+        List<Property> allProperties = propertyRepository.findAll();
         List<PropertyDto> propertyDtos = new ArrayList<>();
 
-        properties.forEach(property -> propertyDtos.add(PropertyDto.getPropertyDto(property)));
+        allProperties.forEach(property -> propertyDtos.add(PropertyDto.getPropertyDto(property)));
         return propertyDtos;
     }
 
@@ -115,7 +115,7 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyDto addPropertyByUserId(PropertyDto propertyDto) {
+    public PropertyDto addProperty(PropertyDto propertyDto) {
         Property property = PropertyDto.getProperty(propertyDto);
         propertyRepository.save(property);
         return PropertyDto.getPropertyDto(property);

@@ -95,7 +95,7 @@ public class PropertyController {
 
     @PostMapping("/addproperty")
     public PropertyDto addProperty(@RequestBody PropertyDto propertyDto) {
-        return propertyService.addPropertyByUserId(propertyDto);
+        return propertyService.addProperty(propertyDto);
     }
 
     @PutMapping("/property/{propertyId}")

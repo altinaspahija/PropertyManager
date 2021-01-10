@@ -23,5 +23,5 @@ public interface PropertyService {
     //testing something new.
     List<PropertyDto> getPropertyByPriceAndCountry(float price, String country);
 
-    PropertyDto addPropertyByUserId(PropertyDto propertyDto);
+    PropertyDto addProperty(PropertyDto propertyDto);
 }
