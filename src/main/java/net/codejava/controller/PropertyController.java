@@ -1,6 +1,6 @@
 package net.codejava.controller;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import net.codejava.dto.PropertyDto;
@@ -85,14 +85,14 @@ public class PropertyController {
     @GetMapping("getPropertiesByFilter")
     public List<PropertyDto> getPropertiesByFilter(@RequestParam float price,
                                                    @RequestParam String country,
-                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date availableFrom,
-                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date availableTo) {
+                                                   @RequestParam Date availableFrom,
+                                                   @RequestParam Date availableTo) {
         List<PropertyDto> propertiesByFilter = propertyService.getPropertiesByFilters(price,country,availableFrom,availableTo);
         return propertiesByFilter;
     }
 
-    @DeleteMapping("property/{propertyId}")
-    public boolean deleteProperty(@PathVariable Integer propertyId) {
+    @DeleteMapping("deleteproperty")
+    public boolean deleteProperty(@RequestParam Integer propertyId) {
         return propertyService.deletePropertyByPropertyId(propertyId);
     }
 

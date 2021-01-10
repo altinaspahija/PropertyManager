@@ -18,11 +18,12 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
 
     @Override
     public List<PaymentDetailsDto> getPaymentDetailsByReservationId(Integer reservationId) {
-        List<PaymentDetails> paymentDetails = paymentDetailsRepository.getPaymentDetailsByReservationId(reservationId);
+        List<PaymentDetails> paymentDetails = paymentDetailsRepository.getPaymentDetailsByUserId(reservationId);
         List<PaymentDetailsDto> paymentDetailsDtos = new ArrayList<>();
 
         paymentDetails.forEach(payment -> paymentDetailsDtos.add(PaymentDetailsDto.getPaymentDetailsDto(payment)));
         return paymentDetailsDtos;
+
     }
 
     @Override
@@ -43,7 +44,7 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
                 paymentDetails.getPaymentDate(),
                 paymentDetails.getCardHolderName(),
                 paymentDetails.getCreditCardNo(),
-                paymentDetails.getExpDate(),
+                paymentDetails.getExpiryDate(),
                 paymentDetails.getCsv()));
     }
 }

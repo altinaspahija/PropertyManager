@@ -6,7 +6,6 @@ import net.codejava.dto.PropertyDto;
 import java.util.List;
 
 public interface PaymentDetailsService {
-
     List<PaymentDetailsDto> getPaymentDetailsByReservationId(Integer reservationId);
 
     List<PaymentDetailsDto> getPaymentDetailsByUserId(Integer userId);

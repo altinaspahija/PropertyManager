@@ -2,7 +2,7 @@ package net.codejava.service;
 
 import net.codejava.dto.PropertyDto;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public interface PropertyService {

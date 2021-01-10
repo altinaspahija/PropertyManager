@@ -4,7 +4,7 @@ import lombok.Data;
 import net.codejava.model.PaymentDetails;
 
 import javax.persistence.Column;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 public class PaymentDetailsDto {
@@ -14,7 +14,7 @@ public class PaymentDetailsDto {
     private Date paymentDate;
     private String cardHolderName;
     private long creditCardNo;
-    private Date expDate;
+    private Date expiryDate;
     private int csv;
 
     public static PaymentDetails getPaymentDetails(PaymentDetailsDto paymentDetailsDto) {
@@ -24,7 +24,7 @@ public class PaymentDetailsDto {
         paymentDetails.setPaymentId(paymentDetailsDto.getPaymentId());
         paymentDetails.setCardHolderName(paymentDetailsDto.getCardHolderName());
         paymentDetails.setCreditCardNo(paymentDetailsDto.getCreditCardNo());
-        paymentDetails.setExpDate(paymentDetailsDto.getExpDate());
+        paymentDetails.setExpiryDate(paymentDetailsDto.getExpiryDate());
         paymentDetails.setPaymentDate(paymentDetailsDto.getPaymentDate());
         paymentDetails.setReservationId(paymentDetailsDto.getReservationId());
         paymentDetails.setCsv(paymentDetailsDto.getCsv());
@@ -41,7 +41,7 @@ public class PaymentDetailsDto {
         paymentDetailsDto.setCreditCardNo(paymentDetails.getCreditCardNo());
         paymentDetailsDto.setPaymentDate(paymentDetails.getPaymentDate());
         paymentDetailsDto.setReservationId(paymentDetails.getReservationId());
-        paymentDetailsDto.setExpDate(paymentDetails.getExpDate());
+        paymentDetailsDto.setExpiryDate(paymentDetails.getExpiryDate());
         paymentDetailsDto.setCsv(paymentDetails.getCsv());
 
         return paymentDetailsDto;

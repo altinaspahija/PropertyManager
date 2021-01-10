@@ -3,7 +3,7 @@ package net.codejava.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -29,7 +29,7 @@ public class PaymentDetails {
     private long creditCardNo;
 
     @Column(name="exp_date")
-    private Date expDate;
+    private Date expiryDate;
 
     @Column(name="csv")
     private int csv;

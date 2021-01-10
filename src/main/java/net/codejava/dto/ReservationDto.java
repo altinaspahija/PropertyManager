@@ -6,7 +6,7 @@ import net.codejava.model.Reservation;
 import lombok.Data;
 import net.codejava.model.User;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 public class ReservationDto {

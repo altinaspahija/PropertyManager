@@ -9,6 +9,7 @@ import net.codejava.service.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.*;
 
 @Service
@@ -21,9 +22,9 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public List<PropertyDto> getPropertiesByUserId(Integer userId) {
         List<PropertyDto> retProperties = new ArrayList<>();
-        List<Property> propertiesByUserId = propertyRepository.findAll();
+        List<Property> allProperties = propertyRepository.findAll();
 
-        propertiesByUserId.forEach(property -> {
+        allProperties.forEach(property -> {
             if (property.getUserId().equals(userId)){
                 retProperties.add(PropertyDto.getPropertyDto(property));
             }

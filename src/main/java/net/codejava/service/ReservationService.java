@@ -4,7 +4,7 @@ import net.codejava.dto.ReservationDto;
 import net.codejava.dto.UserDto;
 import net.codejava.model.Reservation;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public interface ReservationService {

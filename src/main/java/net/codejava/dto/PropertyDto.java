@@ -3,7 +3,7 @@ package net.codejava.dto;
 import net.codejava.model.Property;
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 public class PropertyDto {
