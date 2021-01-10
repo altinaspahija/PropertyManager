@@ -108,6 +108,11 @@ public class PropertyController {
         return propertyService.addPropertyByUserId(propertyDto);
     }
 
+    @PutMapping("/property/{propertyId}")
+    public PropertyDto updateProperty(@PathVariable int propertyId, @RequestBody PropertyDto propertyDto) {
+        return propertyService.updatePropertyByPropertyId(propertyDto, propertyId);
+    }
+
    /* @RequestMapping("/new")
     public String showNewPropertyForm(Model model) {
         Property property = new Property();

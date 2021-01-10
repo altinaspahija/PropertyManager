@@ -61,9 +61,21 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public PropertyDto updatePropertyByPropertyId(PropertyDto propertyDto, Integer propertyId) {
-        Property property = PropertyDto.getProperty(propertyDto);
-        Property retProperty = propertyRepository.save(property);
-        return PropertyDto.getPropertyDto(retProperty);
+        Optional<Property> optionProperty = propertyRepository.findById(propertyId);
+        if(optionProperty.isEmpty()){
+            return null;
+        }
+
+        Property retProperty = optionProperty.get();
+        retProperty.setCountry(propertyDto.getCountry());
+        retProperty.setAddress(propertyDto.getAddress());
+        retProperty.setPrice(propertyDto.getPrice());
+        retProperty.setDescription(propertyDto.getDescription());
+        retProperty.setPropertyType(propertyDto.getPropertyType());
+        retProperty.setAvailableFrom(propertyDto.getAvailableFrom());
+        retProperty.setAvailableTo(propertyDto.getAvailableTo());
+
+        return PropertyDto.getPropertyDto(propertyRepository.save(retProperty));
     }
 
     @Override
