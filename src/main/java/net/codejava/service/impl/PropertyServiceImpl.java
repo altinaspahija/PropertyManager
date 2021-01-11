@@ -106,14 +106,7 @@ public class PropertyServiceImpl implements PropertyService {
 
         List<Property> allProperties = propertyRepository.findAll();
         List<PropertyDto> retPropertyDtos = new ArrayList<>();
-        /*allProperties.forEach(property -> {
-            if (property.getCountry().toLowerCase().equals(country.toLowerCase()))
-            {
-                if (property.getPrice()==price) {
-                    retPropertyDtos.add(PropertyDto.getPropertyDto(property));
-                }
-            }
-        });*/
+
 
         List<Reservation> allReservations = reservationRepository.findAll();
         List<ReservationDto> retReservationDtos = new ArrayList<>();
@@ -141,7 +134,7 @@ public class PropertyServiceImpl implements PropertyService {
 
 
         allProperties.forEach(property -> {
-            if (property.getReservation().isEmpty()){
+            if (property.getReservation().isEmpty()||filteredList.contains(property.getPropertyId())){
                 results.add(PropertyDto.getPropertyDto(property));
             }
         });
@@ -151,21 +144,175 @@ public class PropertyServiceImpl implements PropertyService {
                 returnPropertyDto.add(result);
             }
         });
-/*
-
-List<PropertyDto> result = new ArrayList<>();
-for (PropertyDto retPropertyDto : retPropertyDtos) {
-       for (ReservationDto retReservationDto : retReservationDtos) {
-           if (!retReservationDtos.isEmpty()) {
-               if (retPropertyDto.getPropertyId() == retReservationDto.getPropertyId())
-                   result.add(retPropertyDto);
-           } else
-               result.add(retPropertyDto);
-       }
-   }*/
-
 
         return returnPropertyDto;
 
+    }
+
+    @Override
+    public List<PropertyDto> getPropertiesByPricesAndDates(float minPrice, float maxPrice, Date start, Date end) {
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+
+
+        List<Reservation> allReservations = reservationRepository.findAll();
+        List<ReservationDto> retReservationDtos = new ArrayList<>();
+        allReservations.forEach(reservation -> {
+            if ((reservation.getCheckOut().after(start)&&reservation.getCheckOut().after(end)) ||
+                    (reservation.getCheckIn().before(start)&&reservation.getCheckIn().before(end)))
+                retReservationDtos.add(ReservationDto.getReservationDto(reservation));
+        });
+
+
+
+        //
+        ArrayList<Integer> filteredList = new ArrayList<Integer>();
+
+        for (ReservationDto retReservation : retReservationDtos) {
+            filteredList.add(retReservation.getPropertyId());
+        }
+
+
+
+        List<PropertyDto> results = retPropertyDtos.stream()
+                .filter(p -> filteredList.contains(p.getPropertyId()))
+                .distinct()
+                .collect(Collectors.toList());
+
+
+        allProperties.forEach(property -> {
+            if (property.getReservation().isEmpty()||filteredList.contains(property.getPropertyId())){
+                results.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+        List<PropertyDto> returnPropertyDto = new ArrayList<>();
+        results.forEach(result -> {
+            if (PropertyDto.getProperty(result).getPrice()<=maxPrice&&PropertyDto.getProperty(result).getPrice()>=minPrice){
+                returnPropertyDto.add(result);
+            }
+        });
+
+        return returnPropertyDto;
+    }
+
+    @Override
+    public List<PropertyDto> getPropertiesByPriceAndCountry(String country, float minPrice, float maxPrice) {
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+        allProperties.forEach(property -> {
+            if (property.getCountry().toLowerCase().equals(country.toLowerCase())&&(property.getPrice() <= maxPrice&&property.getPrice() >= minPrice))
+            {
+                retPropertyDtos.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+        return retPropertyDtos;
+    }
+
+    @Override
+    public List<PropertyDto> getPropertesByCountryAndDates(String country, Date start, Date end) {
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+
+
+        List<Reservation> allReservations = reservationRepository.findAll();
+        List<ReservationDto> retReservationDtos = new ArrayList<>();
+        allReservations.forEach(reservation -> {
+            if ((reservation.getCheckOut().after(start)&&reservation.getCheckOut().after(end)) ||
+                    (reservation.getCheckIn().before(start)&&reservation.getCheckIn().before(end)))
+                retReservationDtos.add(ReservationDto.getReservationDto(reservation));
+        });
+
+
+
+        //
+        ArrayList<Integer> filteredList = new ArrayList<Integer>();
+
+        for (ReservationDto retReservation : retReservationDtos) {
+            filteredList.add(retReservation.getPropertyId());
+        }
+
+
+
+        List<PropertyDto> results = retPropertyDtos.stream()
+                .filter(p -> filteredList.contains(p.getPropertyId()))
+                .distinct()
+                .collect(Collectors.toList());
+
+
+        allProperties.forEach(property -> {
+            if (property.getReservation().isEmpty()||filteredList.contains(property.getPropertyId())){
+                results.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+        List<PropertyDto> returnPropertyDto = new ArrayList<>();
+        results.forEach(result -> {
+            if (PropertyDto.getProperty(result).getCountry().equals(country)){
+                returnPropertyDto.add(result);
+            }
+        });
+
+        return returnPropertyDto;
+    }
+
+    @Override
+    public List<PropertyDto> getPropertiesByDates(Date start, Date end) {
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+
+
+        List<Reservation> allReservations = reservationRepository.findAll();
+        List<ReservationDto> retReservationDtos = new ArrayList<>();
+        allReservations.forEach(reservation -> {
+            if ((reservation.getCheckOut().after(start)&&reservation.getCheckOut().after(end)) ||
+                    (reservation.getCheckIn().before(start)&&reservation.getCheckIn().before(end)))
+                retReservationDtos.add(ReservationDto.getReservationDto(reservation));
+        });
+        ArrayList<Integer> filteredList = new ArrayList<Integer>();
+
+        for (ReservationDto retReservation : retReservationDtos) {
+            filteredList.add(retReservation.getPropertyId());
+        }
+
+
+
+        List<PropertyDto> results = retPropertyDtos.stream()
+                .filter(p -> filteredList.contains(p.getPropertyId()))
+                .distinct()
+                .collect(Collectors.toList());
+
+
+        allProperties.forEach(property -> {
+            if (property.getReservation().isEmpty()||filteredList.contains(property.getPropertyId())){
+                results.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+
+        return results;
+    }
+
+    @Override
+    public List<PropertyDto> getPropertiesByPrices(float minPrice, float maxPrice) {
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+        allProperties.forEach(property -> {
+            if (property.getPrice() <= maxPrice&&property.getPrice() >= minPrice)
+            {
+                retPropertyDtos.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+        return retPropertyDtos;
+    }
+
+    @Override
+    public List<PropertyDto> getPropertiesByCountry(String country) {
+        List<Property> allProperties = propertyRepository.findAll();
+        List<PropertyDto> retPropertyDtos = new ArrayList<>();
+        allProperties.forEach(property -> {
+            if (property.getCountry().toLowerCase().equals(country.toLowerCase()))
+            {
+                retPropertyDtos.add(PropertyDto.getPropertyDto(property));
+            }
+        });
+        return retPropertyDtos;
     }
 }

@@ -80,12 +80,34 @@ public class PropertyController {
     }
 
     @GetMapping("filterProperties")
-    public List<PropertyDto> getFilterProperties(@RequestParam String country,
-                                                 @RequestParam float minPrice,
-                                                 @RequestParam float maxPrice,
-                                                 @RequestParam Date start,
-                                                 @RequestParam Date end){
-        return  propertyService.getPropertiesByAvailability(country,minPrice,maxPrice,start,end);
+    public List<PropertyDto> getFilterProperties(@RequestParam(required = false) String country,
+                                                 @RequestParam(required = false) Float minPrice,
+                                                 @RequestParam(required = false) Float maxPrice,
+                                                 @RequestParam(required = false) Date start,
+                                                 @RequestParam(required = false) Date end){
+
+    if (country!=null&&minPrice!=null&&maxPrice!=null&&start!=null&&end!=null) {
+        return propertyService.getPropertiesByAvailability(country, minPrice, maxPrice, start, end);
+    }
+    else if(country==null&&minPrice!=null&&maxPrice!=null&&start!=null&&end!=null){
+        return propertyService.getPropertiesByPricesAndDates(minPrice,maxPrice,start,end);
+    }
+    else if(country!=null&&minPrice!=null&&maxPrice!=null&&start==null&&end==null){
+        return propertyService.getPropertiesByPriceAndCountry(country,minPrice,maxPrice);
+    }
+    else if(country!=null&&minPrice==null&&maxPrice==null&&start!=null&&end!=null){
+        return propertyService.getPropertesByCountryAndDates(country,start,end);
+    }
+    else if (country==null&&minPrice==null&&maxPrice==null&&start!=null&&end!=null){
+        return propertyService.getPropertiesByDates(start,end);
+    }
+    else if (country==null&&minPrice!=null&&maxPrice!=null&&start==null&&end==null){
+        return propertyService.getPropertiesByPrices(minPrice,maxPrice);
+    }
+    else if (country!=null&&minPrice==null&&maxPrice==null&&start==null&&end==null){
+        return propertyService.getPropertiesByCountry(country);
+    }
+    return propertyService.getProperties();
     }
 
 }
