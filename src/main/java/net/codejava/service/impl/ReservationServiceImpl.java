@@ -57,23 +57,16 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public boolean deleteReservation(Integer reservationId) {
-
         Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
         if (reservationOpt.isEmpty()) return false;
-        Reservation tempReservation = reservationOpt.get();
-        reservationRepository.deleteById(tempReservation.getReservationId());
-
-        return true;
-   /*     Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
-        if (reservationOpt.isEmpty()) return false;
         reservationRepository.delete(reservationOpt.get());
-        return true;*/
+        return true;
 
     }
 
 
     @Override
-    public ReservationDto updateReservation(ReservationDto reservationDto, Integer reservationId) {
+    public ReservationDto updateReservation(ReservationDto reservationDto) {
         Reservation reservation = ReservationDto.getReservation(reservationDto);
         Reservation retReservation = reservationRepository.save(reservation);
         return ReservationDto.getReservationDto(retReservation);

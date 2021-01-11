@@ -1,9 +1,9 @@
 package net.codejava.service.impl;
 
 import net.codejava.dto.PaymentDetailsDto;
-import net.codejava.dto.PropertyDto;
+import net.codejava.dto.ReservationDto;
 import net.codejava.model.PaymentDetails;
-import net.codejava.model.Property;
+import net.codejava.model.Reservation;
 import net.codejava.repository.PaymentDetailsRepository;
 import net.codejava.service.PaymentDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
 
     @Autowired
     private PaymentDetailsRepository paymentDetailsRepository;
-
 
     @Override
     public List<PaymentDetailsDto> getAllPaymentDetails() {
@@ -43,8 +42,6 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
         return PaymentDetailsDto.getPaymentDetailsDto(paymentDetails);
     }
 
-
-
     @Override
     public boolean deletePaymentDetailsByPaymentId(int paymentId) {
         Optional<PaymentDetails> optionPaymentDetails = paymentDetailsRepository.findById(paymentId);
@@ -57,19 +54,9 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
     }
 
     @Override
-    public PaymentDetailsDto updatePaymentDetailsByDetailsId(PaymentDetailsDto paymentDetailsDto, int paymentId) {
-        Optional<PaymentDetails> optionPayment = paymentDetailsRepository.findById(paymentId);
-        if(optionPayment.isEmpty()){
-            return null;
-        }
-
-        PaymentDetails retPayment = optionPayment.get();
-        retPayment.setPaymentDate(paymentDetailsDto.getPaymentDate());
-        retPayment.setCardHolderName(paymentDetailsDto.getCardHolderName());
-        retPayment.setCreditCardNo(paymentDetailsDto.getCreditCardNo());
-        retPayment.setExpiryDate(paymentDetailsDto.getExpiryDate());
-        retPayment.setCvv(paymentDetailsDto.getCvv());
-
-        return PaymentDetailsDto.getPaymentDetailsDto(paymentDetailsRepository.save(retPayment));
+    public PaymentDetailsDto updatePaymentDetailsByDetailsId(PaymentDetailsDto paymentDetailsDto) {
+            PaymentDetails paymentDetails = PaymentDetailsDto.getPaymentDetails(paymentDetailsDto);
+            PaymentDetails retPaymentDetails = paymentDetailsRepository.save(paymentDetails);
+            return PaymentDetailsDto.getPaymentDetailsDto(retPaymentDetails);
     }
 }

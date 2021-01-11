@@ -1,7 +1,9 @@
 package net.codejava.service.impl;
 
+import net.codejava.dto.PaymentDetailsDto;
 import net.codejava.dto.PropertyDto;
 import net.codejava.dto.ReservationDto;
+import net.codejava.model.PaymentDetails;
 import net.codejava.model.Property;
 import net.codejava.model.Reservation;
 import net.codejava.model.User;
@@ -47,42 +49,12 @@ public class PropertyServiceImpl implements PropertyService {
         return PropertyDto.getPropertyDto(tempProperty);
     }
 
-    @Override
-    public List<PropertyDto> getPropertiesByFilters(float price, String country, Date availableFrom, Date availableTo) {
-        List<Property> allProperties = propertyRepository.findAll();
-        List<PropertyDto> retPropertyDtos = new ArrayList<>();
-        allProperties.forEach(property -> {
-            if (property.getCountry().toLowerCase().equals(country.toLowerCase()))
-            {
-                if (property.getPrice()==price) {
-                    if (property.getAvailableFrom().equals(availableFrom)){
-                        if (property.getAvailableTo().equals(availableTo)){
-                            retPropertyDtos.add(PropertyDto.getPropertyDto(property));
-                        }
-                    }
-                }
-            }
-        });
-        return retPropertyDtos;
-    }
 
     @Override
-    public PropertyDto updatePropertyByPropertyId(PropertyDto propertyDto, Integer propertyId) {
-        Optional<Property> optionProperty = propertyRepository.findById(propertyId);
-        if(optionProperty.isEmpty()){
-            return null;
-        }
-
-        Property retProperty = optionProperty.get();
-        retProperty.setCountry(propertyDto.getCountry());
-        retProperty.setAddress(propertyDto.getAddress());
-        retProperty.setPrice(propertyDto.getPrice());
-        retProperty.setDescription(propertyDto.getDescription());
-        retProperty.setPropertyType(propertyDto.getPropertyType());
-        retProperty.setAvailableFrom(propertyDto.getAvailableFrom());
-        retProperty.setAvailableTo(propertyDto.getAvailableTo());
-
-        return PropertyDto.getPropertyDto(propertyRepository.save(retProperty));
+    public PropertyDto updatePropertyByPropertyId(PropertyDto propertyDto) {
+        Property property = PropertyDto.getProperty(propertyDto);
+        Property retProperty = propertyRepository.save(property);
+        return PropertyDto.getPropertyDto(retProperty);
     }
 
     @Override

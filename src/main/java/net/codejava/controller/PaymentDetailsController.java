@@ -15,21 +15,15 @@ public class PaymentDetailsController {
     @Autowired
     private PaymentDetailsRepository repo;
 
-    @GetMapping("getAllPaymentDetails")
+    @GetMapping("paymentDetails")
     public List<PaymentDetailsDto> getAllPaymentDetails() { return paymentDetailsService.getAllPaymentDetails();}
 
-    @GetMapping("getPaymentDetailsById")
+    @GetMapping("paymentDetailsById")
     public PaymentDetailsDto getPaymentDetailsById(@RequestParam int paymentId){
-        PaymentDetailsDto paymentDetails = paymentDetailsService.getPaymentDetailsByPaymentId(paymentId);
-        if (paymentDetails == null){
-            return null;
-        }
-        else{
-            return paymentDetails;
-        }
+        return paymentDetailsService.getPaymentDetailsByPaymentId(paymentId);
     }
 
-    @PostMapping("addPaymentDetails")
+    @PostMapping("paymentDetails")
     public PaymentDetailsDto addPaymentDetails(@RequestBody PaymentDetailsDto paymentDetailsDto){
         return paymentDetailsService.addPaymentDetails(paymentDetailsDto);
     }
@@ -39,8 +33,8 @@ public class PaymentDetailsController {
         return paymentDetailsService.deletePaymentDetailsByPaymentId(paymentId);
     }
 
-    @PutMapping("/paymentDetails")
-    public PaymentDetailsDto updatePaymentDetails(@RequestParam int paymentId, @RequestBody PaymentDetailsDto paymentDetailsDto){
-        return paymentDetailsService.updatePaymentDetailsByDetailsId(paymentDetailsDto, paymentId);
+    @PutMapping("paymentDetails")
+    public PaymentDetailsDto updatePaymentDetails(@RequestBody PaymentDetailsDto paymentDetailsDto){
+        return paymentDetailsService.updatePaymentDetailsByDetailsId(paymentDetailsDto);
     }
 }

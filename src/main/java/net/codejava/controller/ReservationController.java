@@ -27,53 +27,42 @@ public class ReservationController {
 
     @GetMapping("reservation")
     public ReservationDto getReservationByReservationId(@RequestParam Integer reservationId) {
-        ReservationDto reservation = reservationService.getReservationByReservationId(reservationId);
-        if (reservation == null){
-            return null;
-        }
-        else{
-            return reservation;
-        }
+        return reservationService.getReservationByReservationId(reservationId);
     }
 
-    @GetMapping("/reservations")
+    @GetMapping("reservations")
     public List<ReservationDto> getReservations() {
         return reservationService.getReservations();
     }
 
-    @GetMapping("/reservationsbypropertyid")
+    @GetMapping("reservationsByPropertyId")
     public List<ReservationDto> getReservationsByPropertyId(@RequestParam Integer propertyId) {
-        List<ReservationDto> reservationsByPropertyId = reservationService.getReservationsByPropertyId(propertyId);
-        return reservationsByPropertyId;
+        return reservationService.getReservationsByPropertyId(propertyId);
     }
 
-    @GetMapping("/getReservationsByUserId")
+    @GetMapping("reservationsByUserId")
     public List<ReservationDto> getReservationsByUserId(@RequestParam Integer userId) {
-        List<ReservationDto> reservationsByUserId = reservationService.getReservationsByUserId(userId);
-        return reservationsByUserId;
+        return reservationService.getReservationsByUserId(userId);
     }
 
-    @PostMapping("/addreservation")
+    @PostMapping("reservation")
     public ReservationDto addReservation(@RequestBody ReservationDto reservationDto) {
         return reservationService.addReservation(reservationDto);
     }
 
-    @DeleteMapping("deletereservation")
+    @DeleteMapping("reservation")
     public boolean deleteProperty(@RequestParam Integer reservationId) {
         return reservationService.deleteReservation(reservationId);
     }
 
     @PutMapping("reservation")
-    public ReservationDto updateReservation(@RequestParam int reservationId, @RequestBody ReservationDto reservationDto) {
-
-        return reservationService.updateReservation(reservationDto, reservationId);
+    public ReservationDto updateReservation(@RequestBody ReservationDto reservationDto) {
+        return reservationService.updateReservation(reservationDto);
     }
 
-
-    @GetMapping("/getReservationsByDates")
+    @GetMapping("reservationsByDates")
     public List<ReservationDto> getReservationsByDates(@RequestParam Date start, @RequestParam Date end ) {
-        List<ReservationDto> reservationsByDates = reservationService.getReservationsByDates(start, end);
-        return reservationsByDates;
+        return reservationService.getReservationsByDates(start, end);
     }
 
 }

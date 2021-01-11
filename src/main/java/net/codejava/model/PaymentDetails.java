@@ -1,7 +1,6 @@
 package net.codejava.model;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -10,7 +9,6 @@ import java.sql.Date;
 @Table(name = "payment_details")
 public class PaymentDetails {
 
-    //Generating property Id.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="payment_id")

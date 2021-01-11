@@ -14,8 +14,6 @@ public class PropertyDto {
     private float price;
     private String description;
     private String propertyType;
-    private Date availableFrom;
-    private Date availableTo;
     private int userId;
 
     public static Property getProperty(PropertyDto propertyDto) {
@@ -27,8 +25,8 @@ public class PropertyDto {
         property.setPrice(propertyDto.getPrice());
         property.setDescription(propertyDto.getDescription());
         property.setPropertyType(propertyDto.getPropertyType());
-        property.setAvailableFrom(propertyDto.getAvailableFrom());
-        property.setAvailableTo(propertyDto.getAvailableTo());
+
+
         property.setUserId(propertyDto.getUserId());
 
         return property;
@@ -43,8 +41,7 @@ public class PropertyDto {
         propertyDto.setPrice(property.getPrice());
         propertyDto.setDescription(property.getDescription());
         propertyDto.setPropertyType(property.getPropertyType());
-        propertyDto.setAvailableFrom(property.getAvailableFrom());
-        propertyDto.setAvailableTo(property.getAvailableTo());
+
         propertyDto.setUserId(property.getUserId());
 
         return propertyDto;

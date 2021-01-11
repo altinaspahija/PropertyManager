@@ -1,13 +1,9 @@
 package net.codejava.controller;
 
-import net.codejava.dto.PropertyDto;
 import net.codejava.dto.UserDto;
-import net.codejava.repository.PropertyRepository;
 import net.codejava.repository.UserRepository;
-import net.codejava.service.PropertyService;
 import net.codejava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,37 +17,29 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getUsers")
+    @GetMapping("users")
     public List<UserDto> getUsers() {
         return userService.getUsers();
     }
 
-    @GetMapping("/getUserByUserId")
+    @GetMapping("userByUserId")
     public UserDto getUsersByUserId(@RequestParam Integer userId) {
-       UserDto user = userService.getUserByUserId(userId);
-       return user;
+        return userService.getUserByUserId(userId);
     }
 
-    @PostMapping("/addUser")
+    @PostMapping("user")
     public UserDto addUser(@RequestBody UserDto userDto) {
         return userService.addUser(userDto);
     }
 
 
-    @PutMapping("updateUserByUserId")
-    public UserDto updateUserbyUserId (@RequestParam Integer userId, @RequestBody UserDto userDto){
-        return userService.updateUserByUserId(userDto,userId);
+    @PutMapping("user")
+    public UserDto updateUserByUserId (@RequestBody UserDto userDto){
+        return userService.updateUser(userDto);
     }
 
-    @DeleteMapping("deleteUserByUserId")
+    @DeleteMapping("user")
     public boolean deleteUserByUserId(@RequestParam Integer userId) {
         return userService.deleteUserByUserId(userId);
     }
-
-
-
-
-
-
-
 }

@@ -20,19 +20,4 @@ public class Role {
 
 	@Column(name = "role_description")
 	private String roleDescription;
-
-	/*public Integer getRoleId() {
-		return roleId;
-	}
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-	public String getRoleDescription() {
-		return roleDescription;
-	}
-	public void setName(String role_description) {
-		this.roleDescription = role_description;
-	}*/
-	
-	
 }

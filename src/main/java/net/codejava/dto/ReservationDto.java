@@ -1,11 +1,7 @@
 package net.codejava.dto;
 
-import net.codejava.model.PaymentDetails;
-import net.codejava.model.Property;
 import net.codejava.model.Reservation;
 import lombok.Data;
-import net.codejava.model.User;
-
 import java.sql.Date;
 
 @Data

@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDto updateUserByUserId(UserDto userDto, Integer userId) {
+    public UserDto updateUser(UserDto userDto) {
         User user = UserDto.getUser(userDto);
         User retUser = userRepository.save(user);
         return UserDto.getUserDto(retUser);
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getUsers() {
-        List<User> users = userRepository.getUsers();
+        List<User> users = userRepository.findAll();
         List<UserDto> userDtos = new ArrayList<>();
 
         users.forEach(user -> userDtos.add(UserDto.getUserDto(user)));
