@@ -68,13 +68,19 @@ public class PropertyServiceImpl implements PropertyService {
         return PropertyDto.getPropertyDto(property);
     }
 
+
     @Override
-    public boolean deletePropertyByPropertyId(Integer propertyId) throws PropertyNotFoundException{
+    public boolean deletePropertyByPropertyId(Integer propertyId) {
         Optional<Property> optionProperty = propertyRepository.findById(propertyId);
         if (optionProperty.isEmpty()){
-            throw new PropertyNotFoundException();
+            return false;
         }
         Property tempProperty = optionProperty.get();
+        List<Reservation> reservations = reservationRepository.findAll();
+        reservations.forEach(reservation -> {
+            if (reservation.getPropertyId().equals(propertyId)) {
+                reservationRepository.delete(reservation);
+            }});
         propertyRepository.deleteById(tempProperty.getPropertyId());
         return true;
 
@@ -109,7 +115,12 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public PropertyDto addProperty(PropertyDto propertyDto) {
         Property property = PropertyDto.getProperty(propertyDto);
-        propertyRepository.save(property);
+        Optional<User> user = userRepository.findById(propertyDto.getUserId());
+
+        //you have to be a host in order to make a property
+        if (user.get().getRoleDescription().equals("host")) {
+            propertyRepository.save(property);
+        }
         return PropertyDto.getPropertyDto(property);
     }
 

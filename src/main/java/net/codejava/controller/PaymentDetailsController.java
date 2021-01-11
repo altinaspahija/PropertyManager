@@ -16,24 +16,29 @@ public class PaymentDetailsController {
     @Autowired
     private PaymentDetailsRepository repo;
 
+    //http://localhost:9090/paymentDetails GET
     @GetMapping("paymentDetails")
     public List<PaymentDetailsDto> getAllPaymentDetails() throws PaymentDetailsNotFoundException { return paymentDetailsService.getAllPaymentDetails();}
 
-    @GetMapping("paymentDetailsById")
-    public PaymentDetailsDto getPaymentDetailsById(@RequestParam int paymentId) throws PaymentDetailsNotFoundException {
+    //http://localhost:9090/paymentDetails/paymentId GET
+    @GetMapping("paymentDetailsById/{paymentId}")
+    public PaymentDetailsDto getPaymentDetailsById(@PathVariable int paymentId) throws PaymentDetailsNotFoundException {
         return paymentDetailsService.getPaymentDetailsByPaymentId(paymentId);
     }
 
+    //http://localhost:9090/paymentDetails POST
     @PostMapping("paymentDetails")
     public PaymentDetailsDto addPaymentDetails(@RequestBody PaymentDetailsDto paymentDetailsDto){
         return paymentDetailsService.addPaymentDetails(paymentDetailsDto);
     }
 
-    @DeleteMapping("paymentDetails")
-    public boolean deletePaymentDetailsByPaymentId(@RequestParam int paymentId) throws PaymentDetailsNotFoundException {
+    //http://localhost:9090/paymentDetails/paymentId DELETE
+    @DeleteMapping("paymentDetails/{paymentId}")
+    public boolean deletePaymentDetailsByPaymentId(@PathVariable int paymentId) throws PaymentDetailsNotFoundException {
         return paymentDetailsService.deletePaymentDetailsByPaymentId(paymentId);
     }
 
+    //http://localhost:9090/paymentDetails PUT
     @PutMapping("paymentDetails")
     public PaymentDetailsDto updatePaymentDetails(@RequestParam int paymentId,@RequestBody PaymentDetailsDto paymentDetailsDto) throws PaymentDetailsNotFoundException {
         return paymentDetailsService.updatePaymentDetailsByDetailsId(paymentId, paymentDetailsDto);

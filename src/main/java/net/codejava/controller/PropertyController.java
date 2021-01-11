@@ -2,23 +2,15 @@ package net.codejava.controller;
 
 import java.sql.Date;
 import java.util.List;
-
 import net.codejava.dto.PropertyDto;
 import net.codejava.dto.UserDto;
 import net.codejava.exception.InvalidParameterException;
 import net.codejava.exception.PropertyNotFoundException;
 import net.codejava.exception.UserNotFoundException;
-import net.codejava.repository.PropertyRepository;
-import net.codejava.repository.UserRepository;
 import net.codejava.service.PropertyService;
 import net.codejava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
-import javax.servlet.http.HttpServletRequest;
-
 
 @RestController
 public class PropertyController {
@@ -26,14 +18,7 @@ public class PropertyController {
     @Autowired
     private PropertyService propertyService;
     @Autowired
-    private PropertyRepository repo;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private UserService userService;
-    private UserDetails userDetails;
-    private UserDetailsService userDetailsService;
-    private HttpServletRequest request;
 
     @GetMapping("/propertiesauth")
     public List<PropertyDto> getPropertiesAuth(@RequestParam Integer userId) throws UserNotFoundException, PropertyNotFoundException {
@@ -50,38 +35,45 @@ public class PropertyController {
     }
 
 
-    @GetMapping("/property")
-    public PropertyDto getPropertyByPropertyId(@RequestParam Integer propertyId) throws PropertyNotFoundException {
+    //http://localhost:9090/property/propertyId GET
+    @GetMapping("property/{propertyId}")
+    public PropertyDto getPropertyByPropertyId(@PathVariable Integer propertyId) throws PropertyNotFoundException {
         PropertyDto property = propertyService.getPropertyByPropertyId(propertyId);
         if (property == null) return null;
         else return property;
     }
 
-    @GetMapping("/properties")
+    //http://localhost:9090/properties GET
+    @GetMapping("properties")
     public List<PropertyDto> getProperties() throws PropertyNotFoundException {
         return propertyService.getProperties();
     }
 
-    @GetMapping("/propertiesbyuserid")
-    public List<PropertyDto> getPropertiesByUserId(@RequestParam Integer userId) throws PropertyNotFoundException {
+    //http://localhost:9090/property/userId GET
+    @GetMapping("properties/{userId}")
+    public List<PropertyDto> getPropertiesByUserId(@PathVariable Integer userId) throws PropertyNotFoundException {
         return propertyService.getPropertiesByUserId(userId);
     }
 
-    @DeleteMapping("property")
-    public boolean deleteProperty(@RequestParam Integer propertyId) throws PropertyNotFoundException {
+    //http://localhost:9090/property/propertyId DELETE
+    @DeleteMapping("property/{propertyId}")
+    public boolean deleteProperty(@PathVariable Integer propertyId) throws PropertyNotFoundException {
         return propertyService.deletePropertyByPropertyId(propertyId);
     }
 
+    //http://localhost:9090/property POST
     @PostMapping("property")
     public PropertyDto addProperty(@RequestBody PropertyDto propertyDto) {
         return propertyService.addProperty(propertyDto);
     }
 
+    //http://localhost:9090/property PUT
     @PutMapping("property")
     public PropertyDto updateProperty(@RequestParam int propertyId, @RequestBody PropertyDto propertyDto) throws PropertyNotFoundException {
         return propertyService.updatePropertyByPropertyId(propertyId, propertyDto);
     }
 
+    //http://localhost:9090/filterProperties GET
     @GetMapping("filterProperties")
     public List<PropertyDto> getFilterProperties(@RequestParam(required = false) String country,
                                                  @RequestParam(required = false) Float minPrice,

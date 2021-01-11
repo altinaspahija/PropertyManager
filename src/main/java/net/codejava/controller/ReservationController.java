@@ -1,17 +1,10 @@
 package net.codejava.controller;
 
-
-import net.codejava.dto.PropertyDto;
 import net.codejava.dto.ReservationDto;
 import net.codejava.exception.ReservationNotFoundException;
-import net.codejava.model.Reservation;
-import net.codejava.repository.PropertyRepository;
-import net.codejava.repository.ReservationRepository;
-import net.codejava.repository.UserRepository;
 import net.codejava.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.Date;
 import java.util.List;
 
@@ -19,49 +12,51 @@ import java.util.List;
 public class ReservationController {
     @Autowired
     private ReservationService reservationService;
-    @Autowired
-    private ReservationRepository repo;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PropertyRepository propertyRepository;
 
-    @GetMapping("reservation")
-    public ReservationDto getReservationByReservationId(@RequestParam Integer reservationId) {
+    //http://localhost:9090/reservation/reservationId GET
+    @GetMapping("reservation/{reservationId}")
+    public ReservationDto getReservationByReservationId(@PathVariable Integer reservationId) {
         return reservationService.getReservationByReservationId(reservationId);
     }
 
+    //http://localhost:9090/reservations GET
     @GetMapping("reservations")
     public List<ReservationDto> getReservations() throws ReservationNotFoundException {
         return reservationService.getReservations();
     }
 
-    @GetMapping("reservationsByPropertyId")
-    public List<ReservationDto> getReservationsByPropertyId(@RequestParam Integer propertyId) throws ReservationNotFoundException {
+    //http://localhost:9090/reservations/reservationId GET
+    @GetMapping("reservations/{reservationId}")
+    public List<ReservationDto> getReservationsByPropertyId(@PathVariable Integer propertyId) throws ReservationNotFoundException {
         return reservationService.getReservationsByPropertyId(propertyId);
     }
 
-    @GetMapping("reservationsByUserId")
-    public List<ReservationDto> getReservationsByUserId(@RequestParam Integer userId) throws ReservationNotFoundException {
+    //http://localhost:9090/reservations/userId GET
+    @GetMapping("reservations/{userId}")
+    public List<ReservationDto> getReservationsByUserId(@PathVariable Integer userId) throws ReservationNotFoundException {
         return reservationService.getReservationsByUserId(userId);
     }
 
-    @PostMapping("reservation")
+    //http://localhost:9090/reservation POST
+    @PostMapping("reservation/{propertyId}")
     public ReservationDto addReservation(@RequestBody ReservationDto reservationDto) {
         return reservationService.addReservation(reservationDto);
     }
 
+    //http://localhost:9090/reservation DELETE
     @DeleteMapping("reservation")
     public boolean deleteProperty(@RequestParam Integer reservationId) throws ReservationNotFoundException {
         return reservationService.deleteReservation(reservationId);
     }
 
+    //http://localhost:9090/reservation PUT
     @PutMapping("reservation")
     public ReservationDto updateReservation(@RequestParam int reservationId,
                                             @RequestBody ReservationDto reservationDto) throws ReservationNotFoundException {
         return reservationService.updateReservation(reservationId,reservationDto);
     }
 
+    //http://localhost:9090/reservationsByDates GET
     @GetMapping("reservationsByDates")
     public List<ReservationDto> getReservationsByDates(@RequestParam Date start, @RequestParam Date end ) {
         return reservationService.getReservationsByDates(start, end);

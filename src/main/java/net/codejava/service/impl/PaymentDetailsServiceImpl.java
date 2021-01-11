@@ -40,7 +40,15 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
     @Override
     public PaymentDetailsDto addPaymentDetails(PaymentDetailsDto paymentDetailsDto) {
         PaymentDetails paymentDetails = PaymentDetailsDto.getPaymentDetails(paymentDetailsDto);
-        paymentDetailsRepository.save(paymentDetails);
+
+        //get current date in sql Date form
+        long millis=System.currentTimeMillis();
+        java.sql.Date date=new java.sql.Date(millis);
+
+        //check the expiration date of the card and then save the payment
+        if (paymentDetailsDto.getExpiryDate().after(date)) {
+            paymentDetailsRepository.save(paymentDetails);}
+
         return PaymentDetailsDto.getPaymentDetailsDto(paymentDetails);
     }
 

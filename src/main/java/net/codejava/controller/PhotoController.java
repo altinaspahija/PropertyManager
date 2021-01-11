@@ -20,7 +20,8 @@ public class PhotoController {
     @Autowired
     private PhotoService photoService;
 
-    @PostMapping("/uploadPhoto")
+    //http://localhost:9090/uploadPhoto POST
+    @PostMapping("uploadPhoto")
     public ResponseEntity<ResponseMessage> uploadPhoto(@RequestParam("file") MultipartFile file) {
         String message = "";
         try {
@@ -34,7 +35,8 @@ public class PhotoController {
         }
     }
 
-    @GetMapping("/downloadPhoto")
+    //http://localhost:9090/downloadPhoto GET
+    @GetMapping("downloadPhoto")
     public ResponseEntity<List<ResponseFile>> getPhoto() {
         List<ResponseFile> files = photoService.getAllFiles().map(dbFile -> {
             String fileDownloadUri = ServletUriComponentsBuilder
@@ -52,7 +54,9 @@ public class PhotoController {
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
     }
-    @GetMapping("/photos/{photo_id}")
+
+    //http://localhost:9090/photos/photo_id GET
+    @GetMapping("photos/{photo_id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String photo_id) {
         Photo photo = photoService.getFile(photo_id);
 
