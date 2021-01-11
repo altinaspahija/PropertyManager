@@ -2,6 +2,7 @@ package net.codejava.service.impl;
 
 import net.codejava.dto.PaymentDetailsDto;
 import net.codejava.dto.ReservationDto;
+import net.codejava.exception.PaymentDetailsNotFoundException;
 import net.codejava.model.PaymentDetails;
 import net.codejava.model.Reservation;
 import net.codejava.repository.PaymentDetailsRepository;
@@ -20,17 +21,18 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
     private PaymentDetailsRepository paymentDetailsRepository;
 
     @Override
-    public List<PaymentDetailsDto> getAllPaymentDetails() {
+    public List<PaymentDetailsDto> getAllPaymentDetails() throws PaymentDetailsNotFoundException {
         List<PaymentDetails> allPaymentDetails = paymentDetailsRepository.findAll();
         List<PaymentDetailsDto> paymentDetailsDtoList = new ArrayList<>();
+        if(allPaymentDetails.isEmpty()) throw new PaymentDetailsNotFoundException();
         allPaymentDetails.forEach(paymentDetails -> paymentDetailsDtoList.add(PaymentDetailsDto.getPaymentDetailsDto(paymentDetails)));
         return paymentDetailsDtoList;
     }
 
     @Override
-    public PaymentDetailsDto getPaymentDetailsByPaymentId(int paymentId) {
+    public PaymentDetailsDto getPaymentDetailsByPaymentId(int paymentId) throws PaymentDetailsNotFoundException {
         Optional<PaymentDetails> optionPaymentDetails = paymentDetailsRepository.findById(paymentId);
-        if (optionPaymentDetails.isEmpty()) return null;
+        if (optionPaymentDetails.isEmpty()) throw new PaymentDetailsNotFoundException();
         PaymentDetails tempPaymentDetails = optionPaymentDetails.get();
         return PaymentDetailsDto.getPaymentDetailsDto(tempPaymentDetails);
     }
@@ -43,10 +45,10 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
     }
 
     @Override
-    public boolean deletePaymentDetailsByPaymentId(int paymentId) {
+    public boolean deletePaymentDetailsByPaymentId(int paymentId) throws PaymentDetailsNotFoundException {
         Optional<PaymentDetails> optionPaymentDetails = paymentDetailsRepository.findById(paymentId);
         if(optionPaymentDetails.isEmpty()){
-            return false;
+            throw new PaymentDetailsNotFoundException();
         }
         PaymentDetails tempPaymentDetails = optionPaymentDetails.get();
         paymentDetailsRepository.deleteById(tempPaymentDetails.getPaymentId());
@@ -54,9 +56,17 @@ public class PaymentDetailsServiceImpl implements PaymentDetailsService {
     }
 
     @Override
-    public PaymentDetailsDto updatePaymentDetailsByDetailsId(PaymentDetailsDto paymentDetailsDto) {
-            PaymentDetails paymentDetails = PaymentDetailsDto.getPaymentDetails(paymentDetailsDto);
-            PaymentDetails retPaymentDetails = paymentDetailsRepository.save(paymentDetails);
-            return PaymentDetailsDto.getPaymentDetailsDto(retPaymentDetails);
+    public PaymentDetailsDto updatePaymentDetailsByDetailsId(int paymentId, PaymentDetailsDto paymentDetailsDto) throws PaymentDetailsNotFoundException {
+            Optional<PaymentDetails> optionPaymentDetails = paymentDetailsRepository.findById(paymentId);
+            if (optionPaymentDetails.isEmpty()) throw new PaymentDetailsNotFoundException();
+            PaymentDetails paymentDetails = optionPaymentDetails.get();
+            paymentDetails.setCardHolderName(paymentDetailsDto.getCardHolderName());
+            paymentDetails.setCreditCardNo(paymentDetailsDto.getCreditCardNo());
+            paymentDetails.setPaymentDate(paymentDetailsDto.getPaymentDate());
+            paymentDetails.setExpiryDate(paymentDetailsDto.getExpiryDate());
+            paymentDetails.setCvv(paymentDetailsDto.getCvv());
+
+            paymentDetailsRepository.save(paymentDetails);
+            return PaymentDetailsDto.getPaymentDetailsDto(paymentDetails);
     }
 }

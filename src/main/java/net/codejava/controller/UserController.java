@@ -1,6 +1,7 @@
 package net.codejava.controller;
 
 import net.codejava.dto.UserDto;
+import net.codejava.exception.UserNotFoundException;
 import net.codejava.repository.UserRepository;
 import net.codejava.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,12 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("users")
-    public List<UserDto> getUsers() {
+    public List<UserDto> getUsers() throws UserNotFoundException {
         return userService.getUsers();
     }
 
     @GetMapping("userByUserId")
-    public UserDto getUsersByUserId(@RequestParam Integer userId) {
+    public UserDto getUsersByUserId(@RequestParam Integer userId) throws UserNotFoundException {
         return userService.getUserByUserId(userId);
     }
 
@@ -34,12 +35,12 @@ public class UserController {
 
 
     @PutMapping("user")
-    public UserDto updateUserByUserId (@RequestBody UserDto userDto){
-        return userService.updateUser(userDto);
+    public UserDto updateUserByUserId (@RequestParam int userId,@RequestBody UserDto userDto) throws UserNotFoundException {
+        return userService.updateUser(userId, userDto);
     }
 
     @DeleteMapping("user")
-    public boolean deleteUserByUserId(@RequestParam Integer userId) {
+    public boolean deleteUserByUserId(@RequestParam Integer userId) throws UserNotFoundException {
         return userService.deleteUserByUserId(userId);
     }
 }

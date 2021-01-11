@@ -3,6 +3,7 @@ package net.codejava.controller;
 
 import net.codejava.dto.PropertyDto;
 import net.codejava.dto.ReservationDto;
+import net.codejava.exception.ReservationNotFoundException;
 import net.codejava.model.Reservation;
 import net.codejava.repository.PropertyRepository;
 import net.codejava.repository.ReservationRepository;
@@ -31,17 +32,17 @@ public class ReservationController {
     }
 
     @GetMapping("reservations")
-    public List<ReservationDto> getReservations() {
+    public List<ReservationDto> getReservations() throws ReservationNotFoundException {
         return reservationService.getReservations();
     }
 
     @GetMapping("reservationsByPropertyId")
-    public List<ReservationDto> getReservationsByPropertyId(@RequestParam Integer propertyId) {
+    public List<ReservationDto> getReservationsByPropertyId(@RequestParam Integer propertyId) throws ReservationNotFoundException {
         return reservationService.getReservationsByPropertyId(propertyId);
     }
 
     @GetMapping("reservationsByUserId")
-    public List<ReservationDto> getReservationsByUserId(@RequestParam Integer userId) {
+    public List<ReservationDto> getReservationsByUserId(@RequestParam Integer userId) throws ReservationNotFoundException {
         return reservationService.getReservationsByUserId(userId);
     }
 
@@ -51,13 +52,14 @@ public class ReservationController {
     }
 
     @DeleteMapping("reservation")
-    public boolean deleteProperty(@RequestParam Integer reservationId) {
+    public boolean deleteProperty(@RequestParam Integer reservationId) throws ReservationNotFoundException {
         return reservationService.deleteReservation(reservationId);
     }
 
     @PutMapping("reservation")
-    public ReservationDto updateReservation(@RequestBody ReservationDto reservationDto) {
-        return reservationService.updateReservation(reservationDto);
+    public ReservationDto updateReservation(@RequestParam int reservationId,
+                                            @RequestBody ReservationDto reservationDto) throws ReservationNotFoundException {
+        return reservationService.updateReservation(reservationId,reservationDto);
     }
 
     @GetMapping("reservationsByDates")

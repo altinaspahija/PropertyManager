@@ -1,6 +1,7 @@
 package net.codejava.controller;
 
 import net.codejava.dto.PaymentDetailsDto;
+import net.codejava.exception.PaymentDetailsNotFoundException;
 import net.codejava.repository.PaymentDetailsRepository;
 import net.codejava.service.PaymentDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,10 @@ public class PaymentDetailsController {
     private PaymentDetailsRepository repo;
 
     @GetMapping("paymentDetails")
-    public List<PaymentDetailsDto> getAllPaymentDetails() { return paymentDetailsService.getAllPaymentDetails();}
+    public List<PaymentDetailsDto> getAllPaymentDetails() throws PaymentDetailsNotFoundException { return paymentDetailsService.getAllPaymentDetails();}
 
     @GetMapping("paymentDetailsById")
-    public PaymentDetailsDto getPaymentDetailsById(@RequestParam int paymentId){
+    public PaymentDetailsDto getPaymentDetailsById(@RequestParam int paymentId) throws PaymentDetailsNotFoundException {
         return paymentDetailsService.getPaymentDetailsByPaymentId(paymentId);
     }
 
@@ -29,12 +30,12 @@ public class PaymentDetailsController {
     }
 
     @DeleteMapping("paymentDetails")
-    public boolean deletePaymentDetailsByPaymentId(@RequestParam int paymentId){
+    public boolean deletePaymentDetailsByPaymentId(@RequestParam int paymentId) throws PaymentDetailsNotFoundException {
         return paymentDetailsService.deletePaymentDetailsByPaymentId(paymentId);
     }
 
     @PutMapping("paymentDetails")
-    public PaymentDetailsDto updatePaymentDetails(@RequestBody PaymentDetailsDto paymentDetailsDto){
-        return paymentDetailsService.updatePaymentDetailsByDetailsId(paymentDetailsDto);
+    public PaymentDetailsDto updatePaymentDetails(@RequestParam int paymentId,@RequestBody PaymentDetailsDto paymentDetailsDto) throws PaymentDetailsNotFoundException {
+        return paymentDetailsService.updatePaymentDetailsByDetailsId(paymentId, paymentDetailsDto);
     }
 }

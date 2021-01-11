@@ -3,6 +3,7 @@ package net.codejava.service.impl;
 import net.codejava.dto.PropertyDto;
 import net.codejava.dto.ReservationDto;
 import net.codejava.dto.UserDto;
+import net.codejava.exception.ReservationNotFoundException;
 import net.codejava.model.Property;
 import net.codejava.model.Reservation;
 import net.codejava.repository.ReservationRepository;
@@ -22,10 +23,10 @@ public class ReservationServiceImpl implements ReservationService {
     private ReservationRepository reservationRepository;
 
     @Override
-    public List<ReservationDto> getReservationsByUserId(Integer userId) {
+    public List<ReservationDto> getReservationsByUserId(Integer userId) throws ReservationNotFoundException {
         List<ReservationDto> retReservations = new ArrayList<>();
         List<Reservation> tempReservations = reservationRepository.findAll();
-
+        if (tempReservations.isEmpty()) throw new ReservationNotFoundException();
         tempReservations.forEach(reservation -> {
             if (reservation.getUserId()==userId) {
                 retReservations.add(ReservationDto.getReservationDto(reservation));
@@ -35,15 +36,17 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<ReservationDto> getReservationsByPropertyId(Integer propertyId) {
+    public List<ReservationDto> getReservationsByPropertyId(Integer propertyId) throws ReservationNotFoundException{
 
         List<ReservationDto> retReservations = new ArrayList<>();
         List<Reservation> tempReservations = reservationRepository.findAll();
+        if(tempReservations.isEmpty()) throw new ReservationNotFoundException();
         tempReservations.forEach(reservation -> {
             if (reservation.getPropertyId()==propertyId) {
                 retReservations.add(ReservationDto.getReservationDto(reservation));
             }
         });
+        if(retReservations.isEmpty()) throw new ReservationNotFoundException();
         return retReservations;
 
     }
@@ -56,9 +59,9 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public boolean deleteReservation(Integer reservationId) {
+    public boolean deleteReservation(Integer reservationId) throws ReservationNotFoundException{
         Optional<Reservation> reservationOpt = reservationRepository.findById(reservationId);
-        if (reservationOpt.isEmpty()) return false;
+        if (reservationOpt.isEmpty()) throw new ReservationNotFoundException();
         reservationRepository.delete(reservationOpt.get());
         return true;
 
@@ -66,10 +69,15 @@ public class ReservationServiceImpl implements ReservationService {
 
 
     @Override
-    public ReservationDto updateReservation(ReservationDto reservationDto) {
-        Reservation reservation = ReservationDto.getReservation(reservationDto);
-        Reservation retReservation = reservationRepository.save(reservation);
-        return ReservationDto.getReservationDto(retReservation);
+    public ReservationDto updateReservation(int reservationId, ReservationDto reservationDto) throws ReservationNotFoundException {
+        Optional<Reservation> optionReservation = reservationRepository.findById(reservationId);
+        if (optionReservation.isEmpty()) throw new ReservationNotFoundException();
+        Reservation reservation = optionReservation.get();
+        reservation.setCheckIn(reservationDto.getCheckIn());
+        reservation.setCheckOut(reservationDto.getCheckOut());
+
+        reservationRepository.save(reservation);
+        return ReservationDto.getReservationDto(reservation);
     }
 
     @Override
@@ -80,10 +88,10 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<ReservationDto> getReservations() {
+    public List<ReservationDto> getReservations() throws ReservationNotFoundException {
         List<Reservation> reservations = reservationRepository.findAll();
         List<ReservationDto> reservationDtos = new ArrayList<>();
-
+        if (reservations.isEmpty()) throw new ReservationNotFoundException();
         reservations.forEach(reservation -> reservationDtos.add(ReservationDto.getReservationDto(reservation)));
         return reservationDtos;
     }

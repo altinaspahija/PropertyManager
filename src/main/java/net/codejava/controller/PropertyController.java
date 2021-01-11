@@ -5,6 +5,8 @@ import java.util.List;
 
 import net.codejava.dto.PropertyDto;
 import net.codejava.dto.UserDto;
+import net.codejava.exception.PropertyNotFoundException;
+import net.codejava.exception.UserNotFoundException;
 import net.codejava.repository.PropertyRepository;
 import net.codejava.repository.UserRepository;
 import net.codejava.service.PropertyService;
@@ -33,7 +35,7 @@ public class PropertyController {
     private HttpServletRequest request;
 
     @GetMapping("/propertiesauth")
-    public List<PropertyDto> getPropertiesAuth(@RequestParam Integer userId) {
+    public List<PropertyDto> getPropertiesAuth(@RequestParam Integer userId) throws UserNotFoundException, PropertyNotFoundException {
         UserDto user = userService.getUserByUserId(userId);
         // User tempUser = UserDto.getUser(user);
         String role = user.getRoleDescription();
@@ -48,24 +50,24 @@ public class PropertyController {
 
 
     @GetMapping("/property")
-    public PropertyDto getPropertyByPropertyId(@RequestParam Integer propertyId) {
+    public PropertyDto getPropertyByPropertyId(@RequestParam Integer propertyId) throws PropertyNotFoundException {
         PropertyDto property = propertyService.getPropertyByPropertyId(propertyId);
         if (property == null) return null;
         else return property;
     }
 
     @GetMapping("/properties")
-    public List<PropertyDto> getProperties() {
+    public List<PropertyDto> getProperties() throws PropertyNotFoundException {
         return propertyService.getProperties();
     }
 
     @GetMapping("/propertiesbyuserid")
-    public List<PropertyDto> getPropertiesByUserId(@RequestParam Integer userId) {
+    public List<PropertyDto> getPropertiesByUserId(@RequestParam Integer userId) throws PropertyNotFoundException {
         return propertyService.getPropertiesByUserId(userId);
     }
 
     @DeleteMapping("property")
-    public boolean deleteProperty(@RequestParam Integer propertyId) {
+    public boolean deleteProperty(@RequestParam Integer propertyId) throws PropertyNotFoundException {
         return propertyService.deletePropertyByPropertyId(propertyId);
     }
 
@@ -75,8 +77,8 @@ public class PropertyController {
     }
 
     @PutMapping("property")
-    public PropertyDto updateProperty(@RequestBody PropertyDto propertyDto) {
-        return propertyService.updatePropertyByPropertyId(propertyDto);
+    public PropertyDto updateProperty(@RequestParam int propertyId, @RequestBody PropertyDto propertyDto) throws PropertyNotFoundException {
+        return propertyService.updatePropertyByPropertyId(propertyId, propertyDto);
     }
 
     @GetMapping("filterProperties")
@@ -84,7 +86,7 @@ public class PropertyController {
                                                  @RequestParam(required = false) Float minPrice,
                                                  @RequestParam(required = false) Float maxPrice,
                                                  @RequestParam(required = false) Date start,
-                                                 @RequestParam(required = false) Date end){
+                                                 @RequestParam(required = false) Date end) throws PropertyNotFoundException {
 
     if (country!=null&&minPrice!=null&&maxPrice!=null&&start!=null&&end!=null) {
         return propertyService.getPropertiesByAvailability(country, minPrice, maxPrice, start, end);
