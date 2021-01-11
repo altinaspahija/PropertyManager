@@ -1,10 +1,7 @@
 package net.codejava.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import net.codejava.exception.PaymentDetailsNotFoundException;
-import net.codejava.exception.PropertyNotFoundException;
-import net.codejava.exception.ReservationNotFoundException;
-import net.codejava.exception.UserNotFoundException;
+import net.codejava.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -61,6 +58,18 @@ public class RentoNowControllerAdvice extends ResponseEntityExceptionHandler {
         body.put("message","Payment Details not found.");
 
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidParameterException.class)
+    public ResponseEntity<Object> handleBad(InvalidParameterException ex){
+        log.error("InvalidParameterException");
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp",LocalDateTime.now());
+        body.put("message","You entered an invalid combination of parameters.");
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
 }

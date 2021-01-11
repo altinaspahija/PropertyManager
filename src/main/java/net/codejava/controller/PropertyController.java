@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.codejava.dto.PropertyDto;
 import net.codejava.dto.UserDto;
+import net.codejava.exception.InvalidParameterException;
 import net.codejava.exception.PropertyNotFoundException;
 import net.codejava.exception.UserNotFoundException;
 import net.codejava.repository.PropertyRepository;
@@ -86,10 +87,64 @@ public class PropertyController {
                                                  @RequestParam(required = false) Float minPrice,
                                                  @RequestParam(required = false) Float maxPrice,
                                                  @RequestParam(required = false) Date start,
-                                                 @RequestParam(required = false) Date end) throws PropertyNotFoundException {
+                                                 @RequestParam(required = false) Date end) throws PropertyNotFoundException, InvalidParameterException {
 
     if (country!=null&&minPrice!=null&&maxPrice!=null&&start!=null&&end!=null) {
         return propertyService.getPropertiesByAvailability(country, minPrice, maxPrice, start, end);
+    }
+    else if(country==null&&minPrice==null&&maxPrice!=null&&start!=null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice!=null&&maxPrice==null&&start!=null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice!=null&&maxPrice!=null&&start==null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice!=null&&maxPrice!=null&&start!=null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice==null&&maxPrice!=null&&start==null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice==null&&maxPrice!=null&&start!=null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice==null&&maxPrice!=null&&start==null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice!=null&&maxPrice==null&&start==null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice==null&&maxPrice==null&&start!=null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice==null&&maxPrice==null&&start==null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice!=null&&maxPrice!=null&&start==null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice!=null&&maxPrice==null&&start!=null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice==null&&maxPrice!=null&&start!=null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country!=null&&minPrice!=null&&maxPrice!=null&&start!=null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice==null&&maxPrice==null&&start==null&&end!=null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice==null&&maxPrice==null&&start!=null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice!=null&&maxPrice==null&&start==null&&end==null){
+        throw new InvalidParameterException();
+    }
+    else if(country==null&&minPrice==null&&maxPrice!=null&&start==null&&end==null){
+        throw new InvalidParameterException();
     }
     else if(country==null&&minPrice!=null&&maxPrice!=null&&start!=null&&end!=null){
         return propertyService.getPropertiesByPricesAndDates(minPrice,maxPrice,start,end);
@@ -109,7 +164,9 @@ public class PropertyController {
     else if (country!=null&&minPrice==null&&maxPrice==null&&start==null&&end==null){
         return propertyService.getPropertiesByCountry(country);
     }
+    else{
     return propertyService.getProperties();
+    }
     }
 
 }
