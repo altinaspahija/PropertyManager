@@ -15,15 +15,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.sql.DataSource;
 
 
-@Configuration
+//@Configuration
 //@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-	@Autowired
+/*
+@Autowired
 	private DataSource dataSource;
 
-/*	@Bean
+	@Bean
 	public UserDetailsService userDetailsService() {
 		return new UserDetailsServiceImpl();
 	}
@@ -33,18 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService());
-
-		
-		return authProvider;
-	}
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-		auth.authenticationProvider(authenticationProvider());
 
 		auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
 
@@ -58,14 +48,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"join users u on u.user_id = ur.user_id\n" +
 						"where u.username=?")
 		;
-	}*/
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-
-	    http.csrf().disable();
-		/*http.authorizeRequests()
+		http.authorizeRequests()
 			.antMatchers("/").hasAnyAuthority("Host","Guest")
 			.antMatchers("/new").hasAuthority("Host")
 			.antMatchers("/edit/**").hasAuthority("Host")
@@ -77,36 +65,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.logout().permitAll()
 				.and()
-				.exceptionHandling().accessDeniedPage("/403");*/
+				.exceptionHandling().accessDeniedPage("/403");
 
-/*
-			.and()
-			.formLogin()
-				.permitAll()
-				.loginPage("/login")
-
-				.usernameParameter("email")
-				.passwordParameter("password")
-				.defaultSuccessUrl("/login_success")
-				.failureUrl("/login_error")
-				.successForwardUrl("/login_success_handler")
-				.failureForwardUrl("/login_failure_handler")
-
-
-			.and()
-
-			.logout()
-				.permitAll()
-				.logoutUrl("logout")
-
-				.logoutSuccessUrl("/logout_success")
-
-			.and()
-
-
-			.exceptionHandling().accessDeniedPage("/403");
-
-
-
-	}*/
+	}
+	*/
 }}
