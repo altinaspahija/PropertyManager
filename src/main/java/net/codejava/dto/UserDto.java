@@ -5,7 +5,7 @@ import net.codejava.model.User;
 
 @Data
 public class UserDto {
-    private Integer userId;
+    private int userId;
     private String username;
     private String fullname;
     private String password;
