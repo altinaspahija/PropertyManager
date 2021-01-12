@@ -1,4 +1,4 @@
-package net.codejava;
+package net.codejava.login;
 
 import net.codejava.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
 package net.codejava.service.impl;
 
-import net.codejava.MyUserDetails;
+import net.codejava.login.MyUserDetails;
 import net.codejava.model.User;
 import net.codejava.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

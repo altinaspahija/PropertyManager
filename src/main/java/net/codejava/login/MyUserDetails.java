@@ -1,4 +1,4 @@
-package net.codejava;
+package net.codejava.login;
 
 import java.util.ArrayList;
 import java.util.Collection;
